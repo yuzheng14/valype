@@ -1,0 +1,23 @@
+{
+  "name": "valype",
+  "version": "0.0.1",
+  "description": "A typescript type definition validator for javascript.",
+  "scripts": {
+    "test": "echo '使用 vitest 运行单次测试及覆盖率' && vitest run --coverage",
+    "test:watch": "echo '使用 vitest 运行监控模式' && vitest --coverage",
+    "test:ui": "echo '使用 vitest 运行监控模式并通过 web 可视化' && vitest --coverage --ui"
+  },
+  "keywords": [],
+  "author": "yuzheng14 <lyuchensy@foxmail.com>",
+  "dependencies": {
+    "@typescript-eslint/parser": "^6.19.1",
+    "fast-glob": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.6",
+    "@vitest/coverage-v8": "^1.2.1",
+    "@vitest/ui": "^1.2.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.1"
+  }
+}

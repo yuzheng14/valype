@@ -1,6 +1,7 @@
 {
   "conventionalCommits.scopes": [
     "constant",
-    "type"
+    "type",
+    "util"
   ]
 }

@@ -2,6 +2,7 @@
   "conventionalCommits.scopes": [
     "constant",
     "type",
-    "util"
+    "util",
+    "test/fake-program"
   ]
 }

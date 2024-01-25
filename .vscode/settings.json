@@ -3,6 +3,7 @@
     "constant",
     "type",
     "util",
-    "test/fake-program"
+    "test/fake-program",
+    "test/util"
   ]
 }

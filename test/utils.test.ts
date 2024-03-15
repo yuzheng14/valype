@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { getOption, getValidatorFilePath } from '../src/util'
 import { defaultGenerateValidatorOptions } from '../src/constant'
 import { GenerateValidatorOptions } from '../src/type'
+import { getFakeProgramPath } from './util'
 
 describe('util 模块测试', () => {
   describe('getOption 函数测试', () => {
@@ -28,7 +29,7 @@ describe('util 模块测试', () => {
     it('匹配 fake-program 中的 validator 文件', async () => {
       expect(
         await getValidatorFilePath(
-          './test/fake-program',
+          getFakeProgramPath('get-validator-file'),
           defaultGenerateValidatorOptions.include,
           defaultGenerateValidatorOptions.exclude,
         ),

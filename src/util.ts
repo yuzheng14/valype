@@ -10,7 +10,7 @@ import fg from 'fast-glob'
  */
 export function getOption<K extends keyof GenerateValidatorOptions>(
   key: K,
-  options: GenerateValidatorOptions
+  options: GenerateValidatorOptions,
 ): NonNullable<GenerateValidatorOptions[K]> {
   return options[key] || defaultGenerateValidatorOptions[key]
 }
@@ -22,7 +22,7 @@ export function getOption<K extends keyof GenerateValidatorOptions>(
  * @param exclude 排除的目录
  * @returns
  */
-export async function getValidatorFile(cwd: string, include: string[], exclude: string[]) {
+export async function getValidatorFilePath(cwd: string, include: string[], exclude: string[]) {
   return await fg(include, {
     cwd,
     ignore: exclude,

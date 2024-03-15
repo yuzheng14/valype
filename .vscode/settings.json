@@ -4,6 +4,7 @@
     "type",
     "util",
     "test/fake-program",
-    "test/util"
+    "test/util",
+    "valype"
   ]
 }

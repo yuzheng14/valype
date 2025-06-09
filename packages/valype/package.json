@@ -1,0 +1,15 @@
+{
+  "name": "valype",
+  "version": "0.0.1",
+  "author": "yuzheng14 <lyuchensy@foxmail.com>",
+  "description": "A typescript type definition validator for javascript.",
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown -w"
+  },
+  "exports": "./dist/index.js",
+  "type": "module",
+  "dependencies": {
+    "oxc-parser": "^0.72.3"
+  }
+}

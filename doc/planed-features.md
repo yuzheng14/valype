@@ -1,4 +1,4 @@
-- [ ] plain interface ( depth 1 with primitives type)
+- [x] plain interface ( depth 1 with primitives type)
 
   ```typescript
   export interface User {
@@ -9,7 +9,7 @@
   }
   ```
 
-- [ ] primitives array in interface
+- [x] primitives array in interface
 
   ```typescript
   export interface Node {

@@ -1,0 +1,71 @@
+import { generate } from '../generate'
+import { describe, it, expect } from 'vitest'
+
+describe('generate 函数', () => {
+  it('应该能将简单接口转换为 zod schema', async () => {
+    const tsCode = `
+      export interface User {
+        name: string;
+        age: number;
+        isActive: boolean;
+      }
+    `
+
+    const result = await generate(tsCode)
+    expect(result).toMatchInlineSnapshot(`
+      "import { z } from "zod/v4";
+
+      export const UserSchema = z.object({
+        name: z.string(),
+        age: z.number(),
+        isActive: z.boolean(),
+      });
+
+      "
+    `)
+  })
+
+  it('应该能处理可选属性', async () => {
+    const tsCode = `
+      export interface Product {
+        id: string;
+        name?: string;
+        price: number;
+      }
+    `
+
+    const result = await generate(tsCode)
+    expect(result).toContain('name: z.string().optional()')
+  })
+
+  it('应该能处理数组类型', async () => {
+    const tsCode = `
+      export interface Order {
+        items: string[];
+        quantities: number[];
+      }
+    `
+
+    const result = await generate(tsCode)
+    expect(result).toContain('items: z.array(z.string())')
+    expect(result).toContain('quantities: z.array(z.number())')
+  })
+
+  it('应该能处理嵌套接口', async () => {
+    const tsCode = `
+      export interface Address {
+        street: string;
+        city: string;
+      }
+
+      export interface Person {
+        name: string;
+        address: Address;
+      }
+    `
+
+    const result = await generate(tsCode)
+    expect(result).toContain('export const AddressSchema = z.object({')
+    expect(result).toContain('address: AddressSchema')
+  })
+})

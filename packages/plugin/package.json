@@ -1,0 +1,102 @@
+{
+  "name": "unplugin-valype",
+  "type": "module",
+  "version": "0.0.1",
+  "packageManager": "bun@1.2.15",
+  "description": "",
+  "license": "MIT",
+  "homepage": "https://github.com/yuzheng14/valype/tree/main/packages/plugin#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuzheng14/valype.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yuzheng14/valype/issues"
+  },
+  "keywords": [
+    "unplugin",
+    "vite",
+    "webpack",
+    "rollup",
+    "transform",
+    "rolldown"
+  ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./astro": "./dist/astro.js",
+    "./esbuild": "./dist/esbuild.js",
+    "./farm": "./dist/farm.js",
+    "./nuxt": "./dist/nuxt.js",
+    "./rollup": "./dist/rollup.js",
+    "./rspack": "./dist/rspack.js",
+    "./types": "./dist/types.js",
+    "./vite": "./dist/vite.js",
+    "./webpack": "./dist/webpack.js",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./*"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown -w"
+  },
+  "peerDependencies": {
+    "@farmfe/core": ">=1",
+    "@nuxt/kit": "^3",
+    "@nuxt/schema": "^3",
+    "esbuild": "*",
+    "rollup": "^3",
+    "vite": ">=3",
+    "webpack": "^4 || ^5"
+  },
+  "peerDependenciesMeta": {
+    "@farmfe/core": {
+      "optional": true
+    },
+    "@nuxt/kit": {
+      "optional": true
+    },
+    "@nuxt/schema": {
+      "optional": true
+    },
+    "esbuild": {
+      "optional": true
+    },
+    "rollup": {
+      "optional": true
+    },
+    "vite": {
+      "optional": true
+    },
+    "webpack": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "magic-string": "^0.30.17",
+    "unplugin": "^2.3.5",
+    "valype": "workspace:*"
+  },
+  "devDependencies": {
+    "@nuxt/kit": "^3.17.5",
+    "@nuxt/schema": "^3.17.5",
+    "@types/node": "^22.15.31",
+    "rollup": "^4.42.0",
+    "tsdown": "^0.12.7",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "webpack": "^5.99.9"
+  }
+}

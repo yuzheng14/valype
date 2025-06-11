@@ -1,11 +1,4 @@
 {
-  "conventionalCommits.scopes": [
-    "constant",
-    "type",
-    "util",
-    "test/fake-program",
-    "test/util",
-    "valype",
-    "test"
-  ]
+  "conventionalCommits.scopes": ["valype", "plugin", "test"],
+  "cSpell.words": ["valype"]
 }

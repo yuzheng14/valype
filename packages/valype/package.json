@@ -3,6 +3,13 @@
   "version": "0.0.1",
   "author": "yuzheng14 <lyuchensy@foxmail.com>",
   "description": "A typescript type definition validator for javascript.",
+  "keywords": [
+    "typescript",
+    "type",
+    "definition",
+    "validator",
+    "validate"
+  ],
   "scripts": {
     "build": "tsdown",
     "dev": "tsdown -w"

@@ -2,7 +2,7 @@ import { generate } from '../generate'
 import { describe, it, expect } from 'vitest'
 
 describe('generate 函数', () => {
-  it('应该能将简单接口转换为 zod schema', async () => {
+  it('should convert simple interface to zod schema', async () => {
     const tsCode = `
       export interface User {
         name: string;
@@ -24,14 +24,17 @@ describe('generate 函数', () => {
       });
 
       ",
-        "schemas": [
-          "UserSchema",
+        "exports": [
+          {
+            "interface": "User",
+            "schema": "UserSchema",
+          },
         ],
       }
     `)
   })
 
-  it('应该能处理可选属性', async () => {
+  it('should handle optional properties', async () => {
     const tsCode = `
       export interface Product {
         id: string;
@@ -44,7 +47,7 @@ describe('generate 函数', () => {
     expect(result).toContain('name: z.string().optional()')
   })
 
-  it('应该能处理数组类型', async () => {
+  it('should handle array types', async () => {
     const tsCode = `
       export interface Order {
         items: string[];
@@ -57,7 +60,7 @@ describe('generate 函数', () => {
     expect(result).toContain('quantities: z.array(z.number())')
   })
 
-  it('应该能处理嵌套接口', async () => {
+  it('should handle nested interfaces', async () => {
     const tsCode = `
       export interface Address {
         street: string;

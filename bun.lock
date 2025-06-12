@@ -24,11 +24,12 @@
     },
     "packages/plugin": {
       "name": "unplugin-valype",
-      "version": "0.0.1",
+      "version": "0.0.0",
       "dependencies": {
         "magic-string": "^0.30.17",
         "unplugin": "^2.3.5",
         "valype": "workspace:*",
+        "zod": "^3.25.63",
       },
       "devDependencies": {
         "@nuxt/kit": "^3.17.5",
@@ -61,7 +62,7 @@
     },
     "packages/valype": {
       "name": "valype",
-      "version": "0.0.1",
+      "version": "0.0.0",
       "dependencies": {
         "oxc-parser": "^0.72.3",
       },
@@ -1138,6 +1139,8 @@
     "test-exclude/minimatch": ["minimatch@9.0.5", "https://registry.npmmirror.com/minimatch/-/minimatch-9.0.5.tgz", { "dependencies": { "brace-expansion": "^2.0.1" } }, "sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow=="],
 
     "unimport/escape-string-regexp": ["escape-string-regexp@5.0.0", "https://registry.npmmirror.com/escape-string-regexp/-/escape-string-regexp-5.0.0.tgz", {}, "sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw=="],
+
+    "unplugin-valype/zod": ["zod@3.25.63", "https://registry.npmmirror.com/zod/-/zod-3.25.63.tgz", {}, "sha512-3ttCkqhtpncYXfP0f6dsyabbYV/nEUW+Xlu89jiXbTBifUfjaSqXOG6JnQPLtqt87n7KAmnMqcjay6c0Wq0Vbw=="],
 
     "vite-node/vite": ["vite@5.4.19", "https://registry.npmmirror.com/vite/-/vite-5.4.19.tgz", { "dependencies": { "esbuild": "^0.21.3", "postcss": "^8.4.43", "rollup": "^4.20.0" }, "optionalDependencies": { "fsevents": "~2.3.3" }, "peerDependencies": { "@types/node": "^18.0.0 || >=20.0.0", "less": "*", "lightningcss": "^1.21.0", "sass": "*", "sass-embedded": "*", "stylus": "*", "sugarss": "*", "terser": "^5.4.0" }, "optionalPeers": ["@types/node", "less", "lightningcss", "sass", "sass-embedded", "stylus", "sugarss", "terser"], "bin": { "vite": "bin/vite.js" } }, "sha512-qO3aKv3HoQC8QKiNSTuUM1l9o/XX3+c+VTgLHbJWHZGeTPVAg2XwazI9UWzoxjIJCGCV2zU60uqMzjeLZuULqA=="],
 

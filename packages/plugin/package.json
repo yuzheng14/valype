@@ -1,7 +1,7 @@
 {
   "name": "unplugin-valype",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "packageManager": "bun@1.2.15",
   "description": "",
   "license": "MIT",
@@ -87,7 +87,8 @@
   "dependencies": {
     "magic-string": "^0.30.17",
     "unplugin": "^2.3.5",
-    "valype": "workspace:*"
+    "valype": "workspace:*",
+    "zod": "^3.25.63"
   },
   "devDependencies": {
     "@nuxt/kit": "^3.17.5",

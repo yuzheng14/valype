@@ -1,4 +1,9 @@
 {
-  "conventionalCommits.scopes": ["valype", "plugin", "test"],
+  "conventionalCommits.scopes": [
+    "valype",
+    "plugin",
+    "test",
+    "changelog"
+  ],
   "cSpell.words": ["valype"]
 }

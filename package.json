@@ -10,6 +10,7 @@
     "@types/bun": "^1.2.15",
     "@vitest/coverage-v8": "^3.2.3",
     "@vitest/ui": "^3.2.3",
+    "conventional-changelog-cli": "^5.0.0",
     "eslint": "^9.28.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.1",
@@ -26,7 +27,8 @@
     "test:watch": "echo '使用 vitest 运行监控模式' && vitest --coverage",
     "test:ui": "echo '使用 vitest 运行监控模式并通过 web 可视化' && vitest --coverage --ui",
     "build": "pnpm run -F \"*valype\" build",
-    "playground": "pnpm run -F playground dev"
+    "playground": "pnpm run -F playground dev",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "type": "module",
   "workspaces": [

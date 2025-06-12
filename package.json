@@ -24,7 +24,9 @@
   "scripts": {
     "test": "echo '使用 vitest 运行单次测试及覆盖率' && vitest run --coverage",
     "test:watch": "echo '使用 vitest 运行监控模式' && vitest --coverage",
-    "test:ui": "echo '使用 vitest 运行监控模式并通过 web 可视化' && vitest --coverage --ui"
+    "test:ui": "echo '使用 vitest 运行监控模式并通过 web 可视化' && vitest --coverage --ui",
+    "build": "pnpm run -F \"*valype\" build",
+    "playground": "pnpm run -F playground dev"
   },
   "type": "module",
   "workspaces": [

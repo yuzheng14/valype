@@ -86,4 +86,5 @@
   }
   ```
 
+- [ ] multi adapter to adopt `zod` `@sinclair/typebox` and other validate tools
   

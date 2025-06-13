@@ -4,14 +4,20 @@ import {
   groupIconVitePlugin,
 } from 'vitepress-plugin-group-icons'
 
+const githubActions = process.env.GITHUB_ACTIONS === 'true'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   // site metadata
   title: 'valype',
   description:
     'TypeScript Runtime Validator - Generate validation from type definitions',
-  base: process.env.GITHUB_ACTIONS === 'true' ? '/valype/' : '/',
-  head: [['link', { rel: 'icon', href: '/logo.svg' }]],
+  base: githubActions ? '/valype/' : '/',
+  head: [
+    [
+      'link',
+      { rel: 'icon', href: (githubActions ? '/valype' : '') + '/logo.svg' },
+    ],
+  ],
 
   // build
   srcDir: 'src',

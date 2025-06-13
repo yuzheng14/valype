@@ -87,22 +87,35 @@ export declare function validateSome(data: unknown): ZodIssue[] | undefined
 
 ## 💡 Motivation
 
-TypeScript provides compile-time type safety, but we often need to handle untrusted data at runtime (HTTP request bodies, JS function calls, etc).
+While TypeScript ensures compile-time type safety, runtime data validation remains essential. Traditional solutions like Zod require duplicate type definitions and lose valuable tsdoc information. Valype solves this by:
 
-Existing solutions like Zod require duplicating type definitions:
+- **Single Source of Truth** - Define types once, get both static and runtime validation
+- **Full Type Information** - Preserves all tsdoc documentation and editor hints
+- **Seamless Integration** - Works natively with TypeScript tooling
 
 ```typescript
-// Type definition
-interface User {
-  name: string
-  age: number
-}
-
-// Zod validator
 const userSchema = z.object({
   name: z.string(),
   age: z.number(),
 })
+
+type User = z.infer<typeof userSchema>
+// And `User['name'] does not have tsdoc info
+```
+
+```typescript
+export interface User {
+  /**
+   * name of user
+   */
+  name: string
+  age: number
+}
+
+// Validator is generated automatically!
+const result = validateUser(data)
+
+// Also `User['name'] has tsdoc info
 ```
 
 Valype lets you **define types once** and get runtime validation automatically!

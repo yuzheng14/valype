@@ -46,4 +46,10 @@ export default defineConfig([
     extends: ['css/recommended'],
   },
   eslintPluginPrettierRecommended,
+  {
+    rules: {
+      // @eslint/markdown doesn't support GitHub Flavored Markdown (GFM) Alerts yet eslint/markdown#294
+      'markdown/no-missing-label-refs': 'off',
+    },
+  },
 ])

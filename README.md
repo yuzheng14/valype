@@ -1,7 +1,124 @@
-# Valtype
+<p align="center">
+  <img width="180" src="./assets/logo.svg" alt="Valype log">
+</p>
+<br />
 
-A typescript type definition validator for javascript.
+<p align="center">
+  <a href="https://www.npmjs.com/package/valype"><img src="https://img.shields.io/npm/v/valype?color=a1b858&label=" alt="valype version"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/npm/l/valype" alt="valype license"></a>
+</p>
+<br/>
+<p align="center">
+  <a href="./README.zh-CN.md">[中文]</a> | <a href="./README.md">[English]</a>
+</p>
+<br />
+
+# Valype 🐉
+
+**TypeScript Runtime Validator** - Generate validation from type definitions
 
 > [!WARNING]
 >
-> NOW IN DEVELOPING
+> Valype is currently under active development. APIs may change in future releases. Please follow [Semver](https://semver.org/) to avoid **breaking changes**.
+
+- 🎯 Type-safe validation with TypeScript type inference
+- 🔌 Seamless unplugin integration (Vite/Rollup/esbuild/Astro/Farm/Nuxt/Rspack/Webpack)
+- 🛡️ Unified type validation
+- 🚧 TypeScript plugin (WIP)
+- 🚧 IDE/editor extension support (WIP)
+
+Valype = Validate + Type. Automatically generates runtime validators from TypeScript type definitions.
+
+## 🚀 Getting Started
+
+1. Install plugin:
+
+```bash
+npm add -D unplugin-valype  // for npm users
+yarn add -D unplugin-valype // for yarn users
+pnpm add -D unplugin-valype // for pnpm users
+bun add -D unplugin-valype  // for bun users
+```
+
+2. Configure plugin for your build tool following [unplugin-valype docs](./packages/plugin/README.md)
+
+3. Define your types (use `.valype.ts` extension):
+
+```typescript
+// user.valype.ts
+export interface User {
+  name: string
+  age: number
+}
+```
+
+4. Use the generated validator:
+
+```typescript
+import { validateUser } from './user.valype'
+
+const issues = validateUser(data) // Returns ZodIssue[] or undefined
+if (issues) {
+  // Handle validation errors
+}
+```
+
+## 📖 Usage
+
+`unplugin-valype` generates validators for types exported from `*.valype.ts` files. The validator type signature is:
+
+```typescript
+export declare function validateSome(data: unknown): ZodIssue[] | undefined
+```
+
+- Returns `undefined` when validation passes
+- Returns `ZodIssue[]` with error details when validation fails
+
+> [!NOTE]
+>
+> You typically don't need to use `valype` package directly, just use the generated validators.
+
+## 📦 Packages
+
+| Package                                                          | Version                                                                                                                                       | Description                  |
+| ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| [valype](https://www.npmjs.com/package/valype)                   | [![valype version](https://img.shields.io/npm/v/valype?color=a1b858&label=)](https://www.npmjs.com/package/valype)                            | Core schema generation logic |
+| [unplugin-valype](https://www.npmjs.com/package/unplugin-valype) | [![unplugin-valype version](https://img.shields.io/npm/v/unplugin-valype?color=a1b858&label=)](https://www.npmjs.com/package/unplugin-valype) | Build tool plugin            |
+
+## 💡 Motivation
+
+TypeScript provides compile-time type safety, but we often need to handle untrusted data at runtime (HTTP request bodies, JS function calls, etc).
+
+Existing solutions like Zod require duplicating type definitions:
+
+```typescript
+// Type definition
+interface User {
+  name: string
+  age: number
+}
+
+// Zod validator
+const userSchema = z.object({
+  name: z.string(),
+  age: z.number(),
+})
+```
+
+Valype lets you **define types once** and get runtime validation automatically!
+
+## 🥰 Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## 🪪 License
+
+[MIT](./LICENSE)
+
+## 🙏 Inspired By
+
+Valype draws inspiration from these excellent projects:
+
+- [ts-to-zod](https://github.com/fabien0102/ts-to-zod)
+- [Zod](https://github.com/colinhacks/zod)
+- [@sinclair/typebox](https://github.com/sinclairzx81/typebox)

@@ -34,6 +34,7 @@ export default defineConfig([
   },
   {
     files: ['**/*.md'],
+    ignores: ['**/CHANGELOG.md', '**/README*.md'],
     plugins: { markdown },
     language: 'markdown/gfm',
     extends: ['markdown/recommended'],

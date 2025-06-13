@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "author": "yuzheng14 <lyuchensy@foxmail.com>",
   "description": "A typescript type definition validator for javascript.",
+  "license": "MIT",
   "keywords": [
     "typescript",
     "type",

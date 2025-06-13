@@ -2,27 +2,13 @@
 
 [![NPM version](https://img.shields.io/npm/v/unplugin-valype?color=a1b858&label=)](https://www.npmjs.com/package/unplugin-valype)
 
-Starter template for [unplugin](https://github.com/unjs/unplugin).
-
-## Template Usage
-
-To use this template, clone it down using:
-
-```bash
-npx degit unplugin/unplugin-valype my-unplugin
-```
-
-And do a global replacement of `unplugin-valype` with your plugin name.
-
-Then you can start developing your unplugin 🔥
-
-To test your plugin, run: `pnpm run dev`
-To release a new version, run: `pnpm run release`
-
 ## Install
 
 ```bash
-npm i unplugin-valype
+npm add -D unplugin-valype
+yarn add -D unplugin-valype
+pnpm add -D unplugin-valype
+bun add -D unplugin-valype
 ```
 
 <details>
@@ -30,16 +16,14 @@ npm i unplugin-valype
 
 ```ts
 // vite.config.ts
-import Starter from 'unplugin-valype/vite'
+import valype from 'unplugin-valype/vite'
 
 export default defineConfig({
   plugins: [
-    Starter({ /* options */ }),
+    valype({ /* options */ }),
   ],
 })
 ```
-
-Example: [`playground/`](./playground/)
 
 <br></details>
 
@@ -48,11 +32,11 @@ Example: [`playground/`](./playground/)
 
 ```ts
 // rollup.config.js
-import Starter from 'unplugin-valype/rollup'
+import valype from 'unplugin-valype/rollup'
 
 export default {
   plugins: [
-    Starter({ /* options */ }),
+    valype({ /* options */ }),
   ],
 }
 ```
@@ -112,10 +96,10 @@ module.exports = {
 ```ts
 // esbuild.config.js
 import { build } from 'esbuild'
-import Starter from 'unplugin-valype/esbuild'
+import valype from 'unplugin-valype/esbuild'
 
 build({
-  plugins: [Starter()],
+  plugins: [valype()],
 })
 ```
 

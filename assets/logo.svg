@@ -1,0 +1,15 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+	<title>valype-logo</title>
+	<style>
+		.s0 { fill: #eac880 } 
+		.s1 { fill: #62bab0 } 
+		.s2 { fill: #de6f64 } 
+	</style>
+	<g id="Layer 1">
+		<g id="组 1">
+			<path id="&lt;Path&gt;" fill-rule="evenodd" class="s0" d="m293.4 875.1l-289-695.6h239.2c0 0 163.2 418.4 170.9 418z"/>
+			<path id="&lt;Path&gt;" fill-rule="evenodd" class="s1" d="m336.2 978l-1.3-3.1 119.9-273.1c86.1-174.9 325.1-209 377-214.4l-208.8 491.2c-150.6-0.2-286.8-0.6-286.8-0.6z"/>
+			<path id="形状 4" fill-rule="evenodd" class="s2" d="m1019.7 45.4l-148.6 349.5c-37.6-0.3-210.6 6.2-384.6 136l131.4-301.4c6-10.7 12.9-25.1 20.9-43.9 43.3-102 169.6-132.4 265.7-140.2z"/>
+		</g>
+	</g>
+</svg>

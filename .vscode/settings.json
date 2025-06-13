@@ -4,7 +4,8 @@
     "plugin",
     "test",
     "changelog",
-    "readme"
+    "readme",
+    "website"
   ],
   "cSpell.words": ["valype"]
 }

@@ -103,6 +103,8 @@ type User = z.infer<typeof userSchema>
 // And `User['name'] does not have tsdoc info
 ```
 
+Using valype:
+
 ```typescript
 export interface User {
   /**

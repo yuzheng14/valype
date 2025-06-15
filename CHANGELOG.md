@@ -1,3 +1,12 @@
+## [0.0.2](https://github.com/yuzheng14/valype/compare/v0.0.1...v0.0.2) (2025-06-15)
+
+
+### Features
+
+* **valype:** :sparkles: support for interfaces extending other type ([a05b0df](https://github.com/yuzheng14/valype/commit/a05b0dfd049135fd84e157390d75294d1f776647)), closes [#11](https://github.com/yuzheng14/valype/issues/11)
+
+
+
 ## [0.0.1](https://github.com/yuzheng14/valype/compare/709b1727e19255799aae43a44f8f26316cfc5cdb...v0.0.1) (2025-06-12)
 
 

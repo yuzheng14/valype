@@ -30,6 +30,16 @@ export async function generate(tsContent: string): Promise<{
     ) {
       const name = stmt.declaration.id.name
       const properties: PropertyInfo[] = []
+      const extendsClauses: string[] = []
+
+      // collect extends clauses
+      if (stmt.declaration.extends.length) {
+        for (const ext of stmt.declaration.extends) {
+          if (ext.expression.type === 'Identifier') {
+            extendsClauses.push(ext.expression.name)
+          }
+        }
+      }
 
       // iterate all properties in the interface body
       for (const property of stmt.declaration.body.body) {
@@ -56,6 +66,7 @@ export async function generate(tsContent: string): Promise<{
       interfaces.push({
         name,
         properties,
+        extends: extendsClauses.length > 0 ? extendsClauses : undefined,
       })
     }
   }
@@ -66,6 +77,11 @@ export async function generate(tsContent: string): Promise<{
   // convert each interface to Zod schema
   interfaces.forEach((intf) => {
     zodCode += `export const ${intf.name}Schema = z.object({\n`
+    if (intf.extends) {
+      intf.extends.forEach((base) => {
+        zodCode += `  ...${base}Schema.shape,\n`
+      })
+    }
 
     intf.properties.forEach((prop) => {
       const zodType = mapTypeToZod(prop.type)
@@ -88,6 +104,7 @@ export async function generate(tsContent: string): Promise<{
 interface InterfaceInfo {
   name: string
   properties: PropertyInfo[]
+  extends?: string[]
 }
 
 interface PropertyInfo {

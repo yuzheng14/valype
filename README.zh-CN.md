@@ -137,3 +137,7 @@ Valype 从以下优秀项目中获得灵感:
 - [ts-to-zod](https://github.com/fabien0102/ts-to-zod)
 - [Zod](https://github.com/colinhacks/zod)
 - [@sinclair/typebox](https://github.com/sinclairzx81/typebox)
+
+## 🌟 Star 历史
+
+[![Star 历史图](https://api.star-history.com/svg?repos=yuzheng14/valype&type=Date)](https://www.star-history.com/#yuzheng14/valype&Date)

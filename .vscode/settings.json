@@ -5,7 +5,11 @@
     "test",
     "changelog",
     "readme",
-    "website"
+    "website",
+    "valype & plugin"
   ],
-  "cSpell.words": ["valype"]
+  "cSpell.words": [
+    "intf",
+    "valype"
+  ]
 }

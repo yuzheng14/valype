@@ -4,7 +4,11 @@ import type {
 } from 'unplugin'
 import type { Options } from './types'
 import { createUnplugin } from 'unplugin'
-import { generate } from 'valype'
+import {
+  generate,
+  ValypeReferenceError,
+  ValypeUnimplementedError,
+} from 'valype'
 import MagicString from 'magic-string'
 import { readFile } from 'node:fs/promises'
 import { createRequire } from 'node:module'
@@ -23,13 +27,18 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = () => {
   // cache for content of transformed `*.valype.ts` files
   const contentCache = new Map<string, TransformResult>()
 
-  async function loadValypeFileContent(id: string): Promise<TransformResult> {
+  async function loadValypeFileContent(
+    id: string,
+  ): Promise<
+    TransformResult | ValypeReferenceError | ValypeUnimplementedError
+  > {
     if (contentCache.has(id)) {
       return contentCache.get(id)!
     }
 
     const code = await readFile(id, 'utf-8')
     const result = await generate(code)
+    if (result instanceof Error) return result
     if (result.code && result.exports.length > 0) {
       schemaCache.set(
         id,
@@ -101,11 +110,12 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = () => {
       async handler(id) {
         if (virtualModuleRE.test(id)) {
           const result = loadVirtualModule(id)
-          if (result instanceof Error) {
-            this.error(result.message)
-          } else return result
+          if (result instanceof Error) this.error(result.message)
+          else return result
         } else if (valypeModuleRE.test(id)) {
-          return loadValypeFileContent(id)
+          const result = await loadValypeFileContent(id)
+          if (result instanceof Error) this.error(result.message)
+          else return result
         }
       },
     },
@@ -130,12 +140,13 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = () => {
                   setup(build) {
                     build.onLoad({ filter: valypeModuleRE }, async (args) => {
                       const result = await loadValypeFileContent(args.path)
-                      if (result) {
+                      if (result instanceof Error)
+                        return { errors: [{ text: result.message }] }
+                      else if (result)
                         return {
                           contents: result.code,
                           loader: 'ts',
                         }
-                      }
                     })
                     build.onResolve({ filter: virtualModuleRE }, (args) => {
                       return { path: args.path, namespace: 'ts' }

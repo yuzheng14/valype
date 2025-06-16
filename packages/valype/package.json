@@ -15,6 +15,9 @@
     "build": "tsdown",
     "dev": "tsdown -w"
   },
+  "files": [
+    "dist"
+  ],
   "exports": "./dist/index.js",
   "type": "module",
   "dependencies": {

@@ -34,10 +34,10 @@ Valype = Validate + Type. Automatically generates runtime validators from TypeSc
 1. Install plugin:
 
 ```bash
-npm add -D unplugin-valype  // for npm users
-yarn add -D unplugin-valype // for yarn users
-pnpm add -D unplugin-valype // for pnpm users
-bun add -D unplugin-valype  // for bun users
+npm add -D unplugin-valype  # for npm users
+yarn add -D unplugin-valype # for yarn users
+pnpm add -D unplugin-valype # for pnpm users
+bun add -D unplugin-valype  # for bun users
 ```
 
 2. Configure plugin for your build tool following [unplugin-valype docs](./packages/plugin/README.md)

@@ -34,10 +34,10 @@ Valype = Validate + Type。自动从 TypeScript 类型定义生成运行时验�
 1. 安装插件:
 
 ```bash
-npm add -D unplugin-valype  // for npm users
-yarn add -D unplugin-valype // for yarn users
-pnpm add -D unplugin-valype // for pnpm users
-bun add -D unplugin-valype  // for bun users
+npm add -D unplugin-valype  # npm 用户
+yarn add -D unplugin-valype # yarn 用户
+pnpm add -D unplugin-valype # pnpm 用户
+bun add -D unplugin-valype  # bun 用户
 ```
 
 2. 根据 [unplugin-valype 文档](./packages/plugin/README.md) 为你的构建工具配置插件

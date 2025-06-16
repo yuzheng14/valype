@@ -1,3 +1,12 @@
+## [0.0.3](https://github.com/yuzheng14/valype/compare/v0.0.2...v0.0.3) (2025-06-16)
+
+
+### Features
+
+* **valype & plugin:** :sparkles: handle mixed usage of exported and unexported interfaces ([2cd98e1](https://github.com/yuzheng14/valype/commit/2cd98e1b46250f2c8a8b88c410201612763e70d8)), closes [#12](https://github.com/yuzheng14/valype/issues/12)
+
+
+
 ## [0.0.2](https://github.com/yuzheng14/valype/compare/v0.0.1...v0.0.2) (2025-06-15)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "valype-workspace",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "yuzheng14 <lyuchensy@foxmail.com>",
   "devDependencies": {
     "@eslint/css": "^0.8.1",

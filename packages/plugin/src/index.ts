@@ -42,18 +42,18 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = () => {
     if (result.code && result.exports.length > 0) {
       schemaCache.set(
         id,
-        result.code + '\nexport { type ZodIssue } from "zod/v4"\n',
+        result.code + '\nexport { type $ZodIssue } from "zod/v4/core"\n',
       )
       const s = new MagicString(code)
       s.prepend(
-        `import { ${result.exports.map((e) => e.schema).join(', ')}, type ZodIssue } from 'valype:${id}'\n`,
+        `import { ${result.exports.map((e) => e.schema).join(', ')}, type $ZodIssue } from 'valype:${id}'\n`,
       )
       s.append('\n')
       s.append(
         result.exports
           .map(
             (e) =>
-              `export function validate${e.interface}(data: unknown): ZodIssue[] | undefined {
+              `export function validate${e.interface}(data: unknown): $ZodIssue[] | undefined {
   const result = ${e.schema}.safeParse(data)
   return result.error?.issues
             }`,

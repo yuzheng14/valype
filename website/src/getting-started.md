@@ -7,20 +7,26 @@ Install the plugin:
 ::: code-group
 
 ```bash [npm]
+npm add zod@latest
 npm add -D unplugin-valype
 ```
 
 ```bash [yarn]
+yarn add zod@latest
 yarn add -D unplugin-valype
 ```
 
 ```bash [pnpm]
+pnpm add zod@latest
 pnpm add -D unplugin-valype
 ```
 
 ```bash [bun]
+bun add zod@latest
 bun add -D unplugin-valype
 ```
+
+> zod's version should be `3.25.0` at least, because valype generates zod v4 schema
 
 :::
 

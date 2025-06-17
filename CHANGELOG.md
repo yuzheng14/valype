@@ -1,3 +1,12 @@
+## [0.0.4](https://github.com/yuzheng14/valype/compare/v0.0.3...v0.0.4) (2025-06-17)
+
+
+### Features
+
+* **valype:** :sparkles: handle nested types in interfaces ([6db889c](https://github.com/yuzheng14/valype/commit/6db889c4e082a1a0c84b35cbbfe049a0927c5eef)), closes [#13](https://github.com/yuzheng14/valype/issues/13)
+
+
+
 ## [0.0.3](https://github.com/yuzheng14/valype/compare/v0.0.2...v0.0.3) (2025-06-16)
 
 

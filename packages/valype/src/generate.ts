@@ -29,7 +29,7 @@ interface AnalyzedInterfaceInfo extends BaseInterfaceInfo {
 
 interface PropertyInfo {
   name: string
-  type: string
+  type: string | PropertyInfo[]
   isOptional: boolean
 }
 
@@ -76,15 +76,40 @@ function analyzeInterface(
   for (const property of intf.node.body.body) {
     if (property.type === 'TSPropertySignature') {
       const name = code.slice(property.key.start, property.key.end)
-      const type = property.typeAnnotation
-        ? code.slice(
-            property.typeAnnotation.typeAnnotation.start,
-            property.typeAnnotation.typeAnnotation.end,
-          )
-        : 'any'
+      const typeAnnotation = property.typeAnnotation?.typeAnnotation
+      let type: string | PropertyInfo[] = 'any'
+
+      if (typeAnnotation) {
+        if (typeAnnotation.type === 'TSTypeLiteral') {
+          // Handle nested type literal
+          type = typeAnnotation.members.map((member) => {
+            if (member.type === 'TSPropertySignature') {
+              const nestedName = code.slice(member.key.start, member.key.end)
+              const nestedType = member.typeAnnotation
+                ? code.slice(
+                    member.typeAnnotation.typeAnnotation.start,
+                    member.typeAnnotation.typeAnnotation.end,
+                  )
+                : 'any'
+              return {
+                name: nestedName,
+                type: nestedType,
+                isOptional: member.optional,
+              }
+            }
+            return {
+              name: '',
+              type: 'any',
+              isOptional: false,
+            }
+          })
+        } else {
+          // Handle normal type
+          type = code.slice(typeAnnotation.start, typeAnnotation.end)
+        }
+      }
 
       const isOptional = property.optional
-
       result.properties.push({
         name,
         type,
@@ -99,7 +124,19 @@ function analyzeInterface(
 /**
  * map TypeScript type to Zod schema type
  */
-function mapTypeToZod(type: string): string {
+function mapTypeToZod(type: string | PropertyInfo[]): string {
+  if (Array.isArray(type)) {
+    // Handle nested type
+    const properties = type
+      .map((prop) => {
+        const zodType = mapTypeToZod(prop.type)
+        const zodField = prop.isOptional ? `${zodType}.optional()` : zodType
+        return `  ${prop.name}: ${zodField}`
+      })
+      .join(',\n')
+    return `z.object({\n${properties}\n})`
+  }
+
   const typeLower = type.toLowerCase()
 
   // primitive
@@ -152,7 +189,9 @@ function generateCodeFromIntf(
   // iterate self hosted properties
   for (const prop of analyzed.properties) {
     const zodType = mapTypeToZod(prop.type)
-    if (zodType.endsWith('schema')) referInProp.push(prop.type)
+    if (typeof prop.type === 'string' && zodType.endsWith('Schema')) {
+      referInProp.push(prop.type)
+    }
     const zodField = prop.isOptional ? `${zodType}.optional()` : zodType
     generated += `  ${prop.name}: ${zodField},\n`
   }

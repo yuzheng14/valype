@@ -5,11 +5,24 @@
 ## Install
 
 ```bash
+# for npm users
+npm add zod@latest
 npm add -D unplugin-valype
+
+# for yarn users
+yarn add zod@latest
 yarn add -D unplugin-valype
+
+# for pnp users
+pnpm add zod@latest
 pnpm add -D unplugin-valype
+
+# for bun users
+bun add zod@latest
 bun add -D unplugin-valype
 ```
+
+> zod's version should be `3.25.0` at least, because valype generate zod v4 schema
 
 <details>
 <summary>Vite</summary><br>

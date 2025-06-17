@@ -86,8 +86,7 @@
   "dependencies": {
     "magic-string": "^0.30.17",
     "unplugin": "^2.3.5",
-    "valype": "workspace:*",
-    "zod": "^3.25.63"
+    "valype": "workspace:*"
   },
   "devDependencies": {
     "@nuxt/kit": "^3.17.5",

@@ -34,11 +34,24 @@ Valype = Validate + Type。自动从 TypeScript 类型定义生成运行时验�
 1. 安装插件:
 
 ```bash
-npm add -D unplugin-valype  # npm 用户
-yarn add -D unplugin-valype # yarn 用户
-pnpm add -D unplugin-valype # pnpm 用户
-bun add -D unplugin-valype  # bun 用户
+# npm 用户
+npm add zod@latest
+npm add -D unplugin-valype
+
+# yarn 用户
+yarn add zod@latest
+yarn add -D unplugin-valype
+
+# pnpm 用户
+pnpm add zod@latest
+pnpm add -D unplugin-valype
+
+# bun 用户
+bun add zod@latest
+bun add -D unplugin-valype
 ```
+
+> zod 的版本至少需要 `3.25.0`，因为 valype 生成的是 zod v4 schema
 
 2. 根据 [unplugin-valype 文档](./packages/plugin/README.md) 为你的构建工具配置插件
 
@@ -89,9 +102,9 @@ export declare function validateSome(data: unknown): ZodIssue[] | undefined
 
 TypeScript 提供了编译时的类型安全，但在运行时我们仍需要验证外部数据。传统方案（如 Zod）要求重复定义类型且会丢失代码提示文档（tsdoc）。Valype 通过自动生成运行时验证器，完美解决了这些问题：
 
-1. **单一定义** - 只需编写 TypeScript 类型，自动获得运行时验证
-2. **完整类型信息** - 保留所有 tsdoc 文档和类型提示
-3. **无缝集成** - 与现有 TypeScript 开发生态完美兼容
+- **单一定义** - 只需编写 TypeScript 类型，自动获得静态和运行时验证
+- **完整类型信息** - 保留所有 tsdoc 文档和编辑器类型提示
+- **无缝集成** - 与现有 TypeScript 开发生态完美兼容
 
 ```typescript
 const userSchema = z.object({
@@ -100,10 +113,10 @@ const userSchema = z.object({
 })
 
 type User = z.infer<typeof userSchema>
-// `User['name'] 无法包含 tsdoc 信息
+// 并且 `User['name']` 无法包含 tsdoc 信息
 ```
 
-改用 valype：
+改用 valype:
 
 ```typescript
 export interface User {
@@ -114,13 +127,13 @@ export interface User {
   age: number
 }
 
-// 自动生成校验函数
+// 校验函数是自动生成的！
 const result = validateUser(data)
 
-// 并且 `User['name']` 含有 tsdoc 信息
+// 同时 `User['name']` 包含 tsdoc 信息
 ```
 
-Valype 让你可以**只定义一次类型**就能自动获得运行时验证!
+Valype 让你可以**只定义一次类型**就能自动获得运行时验证！
 
 ## 🥰 贡献指南
 

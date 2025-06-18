@@ -1,3 +1,13 @@
+## [0.0.5](https://github.com/yuzheng14/valype/compare/v0.0.4...v0.0.5) (2025-06-18)
+
+
+### Bug Fixes
+
+* **plugin:** :bug: load virtual module error on Windows ([6fc8e2e](https://github.com/yuzheng14/valype/commit/6fc8e2e5a0b14810aea1af4fd8f2cedfaa80319c)), closes [#16](https://github.com/yuzheng14/valype/issues/16)
+* **plugin:** :bug: using self-hosted zod in library mode ([a9714fa](https://github.com/yuzheng14/valype/commit/a9714fa4978540bc42f070e511c3e16d07ea8310)), closes [#15](https://github.com/yuzheng14/valype/issues/15)
+
+
+
 ## [0.0.4](https://github.com/yuzheng14/valype/compare/v0.0.3...v0.0.4) (2025-06-17)
 
 

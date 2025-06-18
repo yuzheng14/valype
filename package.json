@@ -1,6 +1,6 @@
 {
   "name": "valype-workspace",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "yuzheng14 <lyuchensy@foxmail.com>",
   "devDependencies": {
     "@eslint/css": "^0.8.1",
@@ -28,7 +28,8 @@
     "test:ui": "echo '使用 vitest 运行监控模式并通过 web 可视化' && vitest --coverage --ui",
     "build": "bun -b -F \"*valype\" build",
     "playground": "bun -b -F playground dev",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "bump": "bumpp -r --all --execute \"bun -b changelog\""
   },
   "type": "module",
   "workspaces": [

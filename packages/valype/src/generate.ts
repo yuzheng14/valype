@@ -4,7 +4,17 @@ import {
   type Statement,
   type TSInterfaceDeclaration,
 } from 'oxc-parser'
-import { ValypeReferenceError, ValypeUnimplementedError } from './error'
+import {
+  ValypeReferenceError,
+  ValypeSyntaxError,
+  ValypeUnimplementedError,
+} from './error'
+import { mapTSInterfaceDeclaration } from './map/map'
+import {
+  createGenerateContext,
+  createTranslationContext,
+  type InterfaceInfo,
+} from './context'
 
 export interface Export {
   /** interface name */
@@ -13,30 +23,10 @@ export interface Export {
   schema: string
 }
 
-interface BaseInterfaceInfo {
-  name: string
-  exported: boolean
-}
-
-interface UnhandledInterfaceInfo extends BaseInterfaceInfo {
-  node: TSInterfaceDeclaration
-}
-
-interface AnalyzedInterfaceInfo extends BaseInterfaceInfo {
-  properties: PropertyInfo[]
-  extends: string[]
-}
-
-interface PropertyInfo {
-  name: string
-  type: string | PropertyInfo[]
-  isOptional: boolean
-}
-
 /** extract TSInterfaceDeclaration from Statement */
 function extractTSInterfaceDeclaration(
   node: Directive | Statement,
-): (TSInterfaceDeclaration & Pick<UnhandledInterfaceInfo, 'exported'>) | void {
+): (TSInterfaceDeclaration & Pick<InterfaceInfo, 'exported'>) | void {
   if (
     node.type === 'ExportNamedDeclaration' &&
     node.declaration?.type === 'TSInterfaceDeclaration'
@@ -52,185 +42,10 @@ function extractTSInterfaceDeclaration(
   else return
 }
 
-function analyzeInterface(
-  intf: UnhandledInterfaceInfo,
-  context: GenerateContext,
-): AnalyzedInterfaceInfo {
-  const { sourceCode } = context
-  const result: AnalyzedInterfaceInfo = {
-    name: intf.name,
-    properties: [],
-    extends: [],
-    exported: intf.exported,
-  }
-
-  // collect extends clauses
-  if (intf.node.extends.length) {
-    for (const ext of intf.node.extends) {
-      if (ext.expression.type === 'Identifier') {
-        result.extends.push(ext.expression.name)
-      }
-    }
-  }
-
-  // iterate all properties in the interface body
-  for (const property of intf.node.body.body) {
-    if (property.type === 'TSPropertySignature') {
-      const name = sourceCode.slice(property.key.start, property.key.end)
-      const typeAnnotation = property.typeAnnotation?.typeAnnotation
-      let type: string | PropertyInfo[] = 'any'
-
-      if (typeAnnotation) {
-        if (typeAnnotation.type === 'TSTypeLiteral') {
-          // Handle nested type literal
-          type = typeAnnotation.members.map((member) => {
-            if (member.type === 'TSPropertySignature') {
-              const nestedName = sourceCode.slice(
-                member.key.start,
-                member.key.end,
-              )
-              const nestedType = member.typeAnnotation
-                ? sourceCode.slice(
-                    member.typeAnnotation.typeAnnotation.start,
-                    member.typeAnnotation.typeAnnotation.end,
-                  )
-                : 'any'
-              return {
-                name: nestedName,
-                type: nestedType,
-                isOptional: member.optional,
-              }
-            }
-            return {
-              name: '',
-              type: 'any',
-              isOptional: false,
-            }
-          })
-        } else {
-          // Handle normal type
-          type = sourceCode.slice(typeAnnotation.start, typeAnnotation.end)
-        }
-      }
-
-      const isOptional = property.optional
-      result.properties.push({
-        name,
-        type,
-        isOptional,
-      })
-    }
-  }
-
-  return result
-}
-
-/**
- * map TypeScript type to Zod schema type
- */
-function mapTypeToZod(type: string | PropertyInfo[]): string {
-  if (Array.isArray(type)) {
-    // Handle nested type
-    const properties = type
-      .map((prop) => {
-        const zodType = mapTypeToZod(prop.type)
-        const zodField = prop.isOptional ? `${zodType}.optional()` : zodType
-        return `  ${prop.name}: ${zodField}`
-      })
-      .join(',\n')
-    return `z.object({\n${properties}\n})`
-  }
-
-  const typeLower = type.toLowerCase()
-
-  // primitive
-  if (typeLower === 'string') return 'z.string()'
-  if (typeLower === 'number') return 'z.number()'
-  if (typeLower === 'boolean') return 'z.boolean()'
-  if (typeLower === 'date') return 'z.date()'
-
-  // array
-  if (type.endsWith('[]')) {
-    const elementType = type.slice(0, -2)
-    return `z.array(${mapTypeToZod(elementType)})`
-  }
-
-  // union
-  if (type.includes('|')) {
-    const types = type.split('|').map((t) => t.trim())
-    return `z.union([${types.map((t) => mapTypeToZod(t)).join(', ')}])`
-  }
-
-  // literal
-  if (type.match(/^".*"$/) || type.match(/^'.*'$/)) {
-    return `z.literal(${type})`
-  }
-
-  // default to Zod object schema
-  return `${type}Schema`
-}
-
 export interface GenerateResult {
   code: string
   /** **[internal]** You should not use this. If you need it indeed, please issue it. */
   exports: Export[]
-}
-
-function generateCodeFromIntf(
-  intf: UnhandledInterfaceInfo,
-  context: GenerateContext,
-): ValypeReferenceError | string {
-  const analyzed = analyzeInterface(intf, context)
-
-  const { processedInterfaces: processed, allInterfaces } = context
-  const { exported, name } = analyzed
-
-  const referInProp = <string[]>[]
-
-  // header
-  let generated = `${exported ? 'export ' : ''}const ${name}Schema = z.object({\n`
-
-  // generate extends. `interface ... extends ...`
-  analyzed.extends.forEach((e) => (generated += `  ...${e}Schema.shape,\n`))
-
-  // iterate self hosted properties
-  for (const prop of analyzed.properties) {
-    const zodType = mapTypeToZod(prop.type)
-    if (typeof prop.type === 'string' && zodType.endsWith('Schema')) {
-      referInProp.push(prop.type)
-    }
-    const zodField = prop.isOptional ? `${zodType}.optional()` : zodType
-    generated += `  ${prop.name}: ${zodField},\n`
-  }
-
-  generated += `})\n\n`
-
-  // mark this as processed
-  processed.push(analyzed.name)
-
-  // process referred but not processed types
-  const unhandledReferences = [
-    ...new Set([...referInProp, ...analyzed.extends]),
-  ].filter((r) => r !== analyzed.name && !processed.includes(r))
-  for (const ref of unhandledReferences) {
-    const intf = allInterfaces.get(ref)
-    if (!intf)
-      return new ValypeReferenceError(`could not find interface ${ref}`)
-    // add it to processed to avoid of being processed in recursion
-    processed.push(ref)
-    const refSchema = generateCodeFromIntf(intf, context)
-    if (refSchema instanceof ValypeReferenceError) return refSchema
-    generated = refSchema + generated
-  }
-
-  return generated
-}
-
-export interface GenerateContext {
-  sourceCode: string
-  allInterfaces: Map<string, UnhandledInterfaceInfo>
-  exportedInterfaces: UnhandledInterfaceInfo[]
-  processedInterfaces: string[]
 }
 
 /**
@@ -240,20 +55,24 @@ export interface GenerateContext {
  */
 export async function generate(
   code: string,
-): Promise<GenerateResult | ValypeUnimplementedError | ValypeReferenceError> {
+): Promise<
+  | GenerateResult
+  | ValypeUnimplementedError
+  | ValypeReferenceError
+  | ValypeSyntaxError
+> {
   const ast = await parseAsync('temp.ts', code)
 
+  const ctx = createGenerateContext(code)
+
   // collect all interface declarations
-  const allInterfaces: GenerateContext['allInterfaces'] = new Map()
-  const exportedInterfaces: GenerateContext['exportedInterfaces'] = []
   for (const stmt of ast.program.body) {
     const node = extractTSInterfaceDeclaration(stmt)
-
     if (!node) continue
 
     const name = node.id.name
 
-    if (allInterfaces.has(name))
+    if (ctx.intf.has(name))
       return new ValypeUnimplementedError('interface merging')
 
     const intfInfo = {
@@ -261,12 +80,12 @@ export async function generate(
       node,
       exported: node.exported,
     }
-    allInterfaces.set(name, intfInfo)
-    if (node.exported) exportedInterfaces.push(intfInfo)
+    ctx.intf.set(name, intfInfo)
+    if (node.exported) ctx.pending.push(intfInfo)
   }
 
   // There is no exported interface and no need to proceed
-  if (exportedInterfaces.length === 0)
+  if (ctx.pending.length === 0)
     return { code: '', exports: [] } satisfies GenerateResult
 
   const result: GenerateResult = {
@@ -274,20 +93,41 @@ export async function generate(
     exports: [],
   }
 
-  const context: GenerateContext = {
-    sourceCode: code,
-    allInterfaces,
-    exportedInterfaces,
-    processedInterfaces: [],
-  }
-
   // Start processing from exported interfaces
-  for (const intf of exportedInterfaces) {
-    const generated = generateCodeFromIntf(intf, context)
-    if (generated instanceof ValypeReferenceError) return generated
-    result.code += generated
-    result.exports.push({ interface: intf.name, schema: `${intf.name}Schema` })
-  }
+  let intfInfo = ctx.pending.shift() as InterfaceInfo // handled length === 0 above, so it must exist
+  let body = ''
+  let pending = ''
+  do {
+    if (ctx.processed.has(intfInfo.name)) continue
+    const context = createTranslationContext()
+
+    let intfDecl = mapTSInterfaceDeclaration(intfInfo.node, context)
+    if (intfDecl instanceof Error) return intfDecl
+    ctx.processed.add(intfInfo.name)
+
+    intfDecl = `const ${intfInfo.name}Schema = ${intfDecl}\n\n`
+    if (intfInfo.exported) {
+      intfDecl = `export ` + intfDecl
+      result.exports.push({
+        interface: intfInfo.name,
+        schema: `${intfInfo.name}Schema`,
+      })
+      body += pending
+      pending = ''
+    }
+
+    pending = intfDecl + pending
+
+    for (const ref of context.dependencies) {
+      if (ctx.processed.has(ref)) continue
+      const intfInfo = ctx.intf.get(ref)
+      if (!intfInfo) return new ValypeReferenceError(ref)
+      if (intfInfo.exported) continue
+      ctx.pending.unshift(intfInfo)
+    }
+  } while ((intfInfo = ctx.pending.shift()!)) // enter loop only intfInfo exists
+
+  result.code += body + pending
 
   return result
 }

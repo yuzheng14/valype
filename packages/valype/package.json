@@ -1,6 +1,6 @@
 {
   "name": "valype",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "yuzheng14 <lyuchensy@foxmail.com>",
   "description": "A typescript type definition validator for javascript.",
   "license": "MIT",

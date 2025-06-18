@@ -1,3 +1,13 @@
+## [0.0.6](https://github.com/yuzheng14/valype/compare/v0.0.5...v0.0.6) (2025-06-18)
+
+
+### Refactor
+
+* **valype** :recycle: rewrite generation logic using Syntax-Directed Translation ([#19](https://github.com/yuzheng14/valype/pull/19)) ([21bd02f](https://github.com/yuzheng14/valype/commit/21bd02f6af8f991fb71c2ab5c02ff5a793d6805d))
+  * deliver information using context
+  * 🥳 Thanks of SDT, valype could transform infinitive nested type literal now!
+
+
 ## [0.0.5](https://github.com/yuzheng14/valype/compare/v0.0.4...v0.0.5) (2025-06-18)
 
 

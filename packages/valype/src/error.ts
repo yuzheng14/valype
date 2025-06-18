@@ -13,3 +13,13 @@ export class ValypeReferenceError extends Error {
     super(`${name} is not defined`)
   }
 }
+
+export class ValypeSyntaxError extends Error {
+  name = 'ValypeSyntaxError' as const
+
+  constructor(unexpected: string, expect: string | string[]) {
+    super(
+      `Unexpected ${unexpected}, expect ${Array.isArray(expect) ? expect.join(' | ') : expect}`,
+    )
+  }
+}

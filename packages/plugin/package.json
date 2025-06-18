@@ -86,6 +86,7 @@
   "dependencies": {
     "magic-string": "^0.30.17",
     "unplugin": "^2.3.5",
+    "uuid": "^11.1.0",
     "valype": "workspace:*"
   },
   "devDependencies": {

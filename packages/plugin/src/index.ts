@@ -23,19 +23,39 @@ const valypeModuleRE = /^[^v].*\.valype\.ts$/
 
 type TransformResult = Exclude<UnTransformResult, string>
 
+// copy from sourcecode of vite
+interface Pos {
+  /** 1-based */
+  line: number
+  /** 0-based */
+  column: number
+}
+const splitRE = /\r?\n/g
+// performance optimized version of vite, besides offset will be set to source.length when overlong
+export function numberToPos(source: string, offset: number | Pos): Pos {
+  if (typeof offset !== 'number') return offset
+  if (offset > source.length) {
+    offset = source.length
+  }
+
+  const lines = source.slice(0, offset).split(splitRE)
+  return {
+    line: lines.length,
+    column: lines[lines.length - 1].length,
+  }
+}
+
 export const unpluginFactory: UnpluginFactory<Options | undefined> = () => {
   // cache for generated schemas
   const schemaCache = new Map<string, string>()
   // cache for content of transformed `*.valype.ts` files
   const contentCache = new Map<string, TransformResult>()
 
-  async function loadValypeFileContent(
-    id: string,
-  ): Promise<
+  async function loadValypeFileContent(id: string): Promise<
     | TransformResult
-    | ValypeReferenceError
-    | ValypeUnimplementedError
-    | ValypeSyntaxError
+    | ((ValypeReferenceError | ValypeUnimplementedError | ValypeSyntaxError) & {
+        code: string
+      })
   > {
     if (contentCache.has(id)) {
       return contentCache.get(id)!
@@ -43,7 +63,7 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = () => {
 
     const code = await readFile(id, 'utf-8')
     const result = await generate(code)
-    if (result instanceof Error) return result
+    if (result instanceof Error) return Object.assign(result, { code })
     if (result.code && result.exports.length > 0) {
       // Windows-style path will be escaped in import path,
       // so use formal of uuid v7 + basename as id of virtual module
@@ -112,7 +132,11 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = () => {
           else return result
         } else if (valypeModuleRE.test(id)) {
           const result = await loadValypeFileContent(id)
-          if (result instanceof Error) this.error(result.message)
+          if (result instanceof Error)
+            this.error({
+              message: result.message,
+              loc: numberToPos(result.code, result.span.start),
+            })
           else return result
         }
       },

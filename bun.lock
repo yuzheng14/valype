@@ -25,7 +25,7 @@
     },
     "packages/plugin": {
       "name": "unplugin-valype",
-      "version": "0.0.6",
+      "version": "0.0.7",
       "dependencies": {
         "magic-string": "^0.30.17",
         "unplugin": "^2.3.5",
@@ -63,14 +63,14 @@
     },
     "packages/valype": {
       "name": "valype",
-      "version": "0.0.6",
+      "version": "0.0.7",
       "dependencies": {
         "oxc-parser": "^0.72.3",
       },
     },
     "playground": {
       "name": "playground",
-      "version": "0.0.6",
+      "version": "0.0.7",
       "dependencies": {
         "vue": "^3.5.16",
         "zod": "^3.25.58",
@@ -85,7 +85,7 @@
     },
     "website": {
       "name": "website",
-      "version": "0.0.6",
+      "version": "0.0.7",
       "devDependencies": {
         "vitepress": "^2.0.0-alpha.6",
         "vitepress-plugin-group-icons": "^1.6.0",

@@ -1,3 +1,18 @@
+## [0.0.7](https://github.com/yuzheng14/valype/compare/v0.0.6...v0.0.7) (2025-06-19)
+
+
+### Bug Fixes
+
+* **valype & plugin:** :bug: type signature mismatch ([ba20a24](https://github.com/yuzheng14/valype/commit/ba20a2462c59dafc3d25b8aff9e0bc0c21c5c8ef))
+
+
+### Features
+
+* **valype:** :sparkles: add more primitive type supported ([#18](https://github.com/yuzheng14/valype/issues/18)) ([21bb539](https://github.com/yuzheng14/valype/commit/21bb539788ddf6567e0763fb65a1b8c605325cc2))
+* **valype:** ✨ compose Valype*Error with Span ([#24](https://github.com/yuzheng14/valype/issues/24)) ([a9d9b36](https://github.com/yuzheng14/valype/commit/a9d9b36a1f31432fcd69b2021a3f64e55984de84)), closes [#17](https://github.com/yuzheng14/valype/issues/17)
+
+
+
 ## [0.0.6](https://github.com/yuzheng14/valype/compare/v0.0.5...v0.0.6) (2025-06-18)
 
 

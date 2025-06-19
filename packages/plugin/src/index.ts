@@ -7,6 +7,7 @@ import { createUnplugin } from 'unplugin'
 import {
   generate,
   ValypeReferenceError,
+  ValypeSyntaxError,
   ValypeUnimplementedError,
 } from 'valype'
 import MagicString from 'magic-string'
@@ -31,7 +32,10 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = () => {
   async function loadValypeFileContent(
     id: string,
   ): Promise<
-    TransformResult | ValypeReferenceError | ValypeUnimplementedError
+    | TransformResult
+    | ValypeReferenceError
+    | ValypeUnimplementedError
+    | ValypeSyntaxError
   > {
     if (contentCache.has(id)) {
       return contentCache.get(id)!

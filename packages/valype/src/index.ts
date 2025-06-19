@@ -1,2 +1,6 @@
 export { generate } from './generate'
-export type { ValypeReferenceError, ValypeUnimplementedError } from './error'
+export {
+  ValypeReferenceError,
+  ValypeUnimplementedError,
+  ValypeSyntaxError,
+} from './error'

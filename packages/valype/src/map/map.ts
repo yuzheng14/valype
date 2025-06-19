@@ -63,11 +63,9 @@ function mapTSUnionType(node: TSUnionType, context: TranslationContext) {
 
   if (node.types.length === 1) return mapTSType(node.types[0], context)
 
-  const nullKeywordIdx = node.types.findIndex((t) => t.type === 'TSNullKeyword')
-  const undefinedKeywordIdx = node.types.findIndex(
-    (t) => t.type === 'TSUndefinedKeyword',
-  )
-  if (nullKeywordIdx !== -1 && undefinedKeywordIdx !== -1) {
+  const hasNull = node.types.some((t) => t.type === 'TSNullKeyword')
+  const hasUndefined = node.types.some((t) => t.type === 'TSUndefinedKeyword')
+  if (hasNull && hasUndefined) {
     const nullishType = mapTSType(
       {
         ...node,
@@ -80,7 +78,7 @@ function mapTSUnionType(node: TSUnionType, context: TranslationContext) {
     if (nullishType instanceof Error) return nullishType
     return `z.nullish(${nullishType})`
   }
-  if (nullKeywordIdx !== -1) {
+  if (hasNull) {
     const nullableType = mapTSType(
       {
         ...node,

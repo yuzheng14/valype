@@ -1,4 +1,7 @@
 {
   "files": [],
-  "references": [{ "path": "packages/valype" }]
+  "compilerOptions": {
+    "skipLibCheck": true
+  },
+  "references": [{ "path": "packages/valype" }, { "path": "packages/plugin" }]
 }

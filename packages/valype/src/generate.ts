@@ -5,6 +5,7 @@ import {
   type TSInterfaceDeclaration,
 } from 'oxc-parser'
 import {
+  extractSpan,
   ValypeReferenceError,
   ValypeSyntaxError,
   ValypeUnimplementedError,
@@ -73,7 +74,10 @@ export async function generate(
     const name = node.id.name
 
     if (ctx.intf.has(name))
-      return new ValypeUnimplementedError('interface merging')
+      return new ValypeUnimplementedError(
+        'interface merging',
+        extractSpan(node),
+      )
 
     const intfInfo = {
       name,
@@ -118,10 +122,11 @@ export async function generate(
 
     pending = intfDecl + pending
 
+    const span = extractSpan(intfInfo.node)
     for (const ref of context.dependencies) {
       if (ctx.processed.has(ref)) continue
       const intfInfo = ctx.intf.get(ref)
-      if (!intfInfo) return new ValypeReferenceError(ref)
+      if (!intfInfo) return new ValypeReferenceError(ref, span)
       if (intfInfo.exported) continue
       ctx.pending.unshift(intfInfo)
     }

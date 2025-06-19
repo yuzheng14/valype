@@ -18,11 +18,7 @@ import type {
   TSUnionType,
 } from 'oxc-parser'
 import { ValypeSyntaxError, ValypeUnimplementedError } from '../error'
-import {
-  mapTSBooleanKeyword,
-  mapTSNumberKeyword,
-  mapTSStringKeyword,
-} from './keyword'
+import { mapTSKeyword } from './keyword'
 import type { TranslationContext } from '../context'
 
 export function mapTSInterfaceHeritage(
@@ -124,11 +120,17 @@ function mapTSType(
 ): string | ValypeUnimplementedError | ValypeSyntaxError {
   switch (node.type) {
     case 'TSStringKeyword':
-      return mapTSStringKeyword(node)
     case 'TSNumberKeyword':
-      return mapTSNumberKeyword(node)
     case 'TSBooleanKeyword':
-      return mapTSBooleanKeyword(node)
+    case 'TSBigIntKeyword':
+    case 'TSUnknownKeyword':
+    case 'TSUndefinedKeyword':
+    case 'TSNullKeyword':
+    case 'TSSymbolKeyword':
+    case 'TSAnyKeyword':
+    case 'TSVoidKeyword':
+    case 'TSNeverKeyword':
+      return mapTSKeyword(node)
     case 'TSArrayType':
       return mapTSArrayType(node, context)
     case 'TSUnionType':

@@ -8,6 +8,7 @@
   * 🥳 Thanks of SDT, valype could transform infinitive nested type literal now!
 
 
+
 ## [0.0.5](https://github.com/yuzheng14/valype/compare/v0.0.4...v0.0.5) (2025-06-18)
 
 

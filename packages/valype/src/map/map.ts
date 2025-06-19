@@ -59,8 +59,6 @@ function mapTSArrayType(node: TSArrayType, context: TranslationContext) {
 }
 
 function mapTSUnionType(node: TSUnionType, context: TranslationContext) {
-  const types: string[] = []
-
   if (node.types.length === 1) return mapTSType(node.types[0], context)
 
   const hasNull = node.types.some((t) => t.type === 'TSNullKeyword')
@@ -90,6 +88,7 @@ function mapTSUnionType(node: TSUnionType, context: TranslationContext) {
     return `z.nullable(${nullableType})`
   }
 
+  const types: string[] = []
   for (const type of node.types) {
     const result = mapTSType(type, context)
     if (result instanceof Error) return result

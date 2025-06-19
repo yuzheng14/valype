@@ -59,35 +59,6 @@ function mapTSArrayType(node: TSArrayType, context: TranslationContext) {
 }
 
 function mapTSUnionType(node: TSUnionType, context: TranslationContext) {
-  if (node.types.length === 1) return mapTSType(node.types[0], context)
-
-  const hasNull = node.types.some((t) => t.type === 'TSNullKeyword')
-  const hasUndefined = node.types.some((t) => t.type === 'TSUndefinedKeyword')
-  if (hasNull && hasUndefined) {
-    const nullishType = mapTSType(
-      {
-        ...node,
-        types: node.types.filter(
-          (t) => t.type !== 'TSNullKeyword' && t.type !== 'TSUndefinedKeyword',
-        ),
-      },
-      context,
-    )
-    if (nullishType instanceof Error) return nullishType
-    return `z.nullish(${nullishType})`
-  }
-  if (hasNull) {
-    const nullableType = mapTSType(
-      {
-        ...node,
-        types: node.types.filter((t) => t.type !== 'TSNullKeyword'),
-      },
-      context,
-    )
-    if (nullableType instanceof Error) return nullableType
-    return `z.nullable(${nullableType})`
-  }
-
   const types: string[] = []
   for (const type of node.types) {
     const result = mapTSType(type, context)

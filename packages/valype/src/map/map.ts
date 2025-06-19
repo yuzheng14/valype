@@ -17,8 +17,12 @@ import type {
   TSTypeReference,
   TSUnionType,
 } from 'oxc-parser'
-import { ValypeSyntaxError, ValypeUnimplementedError } from '../error'
 import { mapTSKeyword } from './keyword'
+import {
+  extractSpan,
+  ValypeSyntaxError,
+  ValypeUnimplementedError,
+} from '../error'
 import type { TranslationContext } from '../context'
 
 export function mapTSInterfaceHeritage(
@@ -30,6 +34,7 @@ export function mapTSInterfaceHeritage(
     return new ValypeSyntaxError(
       expression.type,
       'Identifier' satisfies IdentifierReference['type'],
+      extractSpan(expression),
     )
   const { name } = expression
   context.dependencies.push(name)
@@ -42,13 +47,20 @@ function mapPropertyKey(node: PropertyKey) {
       return node.name
 
     case 'Literal':
-      return node.raw ?? new ValypeSyntaxError('null', 'defined literal')
+      return (
+        node.raw ??
+        new ValypeSyntaxError('null', 'defined literal', extractSpan(node))
+      )
 
     default:
-      return new ValypeSyntaxError(node.type, [
-        'Identifier' satisfies IdentifierName['type'],
-        'Literal' satisfies StringLiteral['type'],
-      ])
+      return new ValypeSyntaxError(
+        node.type,
+        [
+          'Identifier' satisfies IdentifierName['type'],
+          'Literal' satisfies StringLiteral['type'],
+        ],
+        extractSpan(node),
+      )
   }
 }
 
@@ -75,7 +87,7 @@ function mapTSLiteral(node: TSLiteral) {
       return `z.literal(${node.raw})`
 
     default:
-      return new ValypeUnimplementedError(node.type)
+      return new ValypeUnimplementedError(node.type, extractSpan(node))
   }
 }
 
@@ -100,7 +112,7 @@ function mapTSTypeName(node: TSTypeName, context: TranslationContext) {
       return `${node.name}Schema`
 
     default:
-      return new ValypeUnimplementedError(node.type)
+      return new ValypeUnimplementedError(node.type, extractSpan(node))
   }
 }
 
@@ -109,7 +121,8 @@ function mapTSTypeReference(
   context: TranslationContext,
 ) {
   // TODO implement generics
-  if (node.typeArguments) return new ValypeUnimplementedError('generics')
+  if (node.typeArguments)
+    return new ValypeUnimplementedError('generics', extractSpan(node))
 
   return mapTSTypeName(node.typeName, context)
 }
@@ -143,7 +156,7 @@ function mapTSType(
       return mapTSTypeReference(node, context)
 
     default:
-      return new ValypeUnimplementedError(node.type)
+      return new ValypeUnimplementedError(node.type, extractSpan(node))
   }
 }
 
@@ -172,7 +185,7 @@ export function mapTSSignature(node: TSSignature, context: TranslationContext) {
       return mapTSPropertySignature(node, context)
 
     default:
-      return new ValypeUnimplementedError(node.type)
+      return new ValypeUnimplementedError(node.type, extractSpan(node))
   }
 }
 

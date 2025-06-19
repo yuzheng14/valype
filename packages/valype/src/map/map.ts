@@ -64,6 +64,22 @@ function mapTSArrayType(node: TSArrayType, context: TranslationContext) {
 
 function mapTSUnionType(node: TSUnionType, context: TranslationContext) {
   const types: string[] = []
+
+  if (node.types.length === 1) return mapTSType(node.types[0], context)
+
+  const nullKeywordIdx = node.types.findIndex((t) => t.type === 'TSNullKeyword')
+  if (nullKeywordIdx !== -1) {
+    const nullableType = mapTSType(
+      {
+        ...node,
+        types: node.types.toSpliced(nullKeywordIdx, 1),
+      },
+      context,
+    )
+    if (nullableType instanceof Error) return nullableType
+    return `z.nullable(${nullableType})`
+  }
+
   for (const type of node.types) {
     const result = mapTSType(type, context)
     if (result instanceof Error) return result

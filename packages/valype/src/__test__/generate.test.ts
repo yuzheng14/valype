@@ -333,10 +333,10 @@ describe('generate function', () => {
     export type Age = number
     export type Gender = 'male' | 'female'
     `
-    expect(await generate(code)).toBeDefined()
+    expect(await generate(code)).toMatchInlineSnapshot(`[ValypeUnimplementedError: \`type alias\` haven't been implemented yet.]`)
   })
 
-  it('should handle simple type alias with literal', async () => {
+  it('should handle type alias with literal', async () => {
     const code = `
     type Age = number
     type Gender = 'male' | 'female'
@@ -349,7 +349,7 @@ describe('generate function', () => {
     expect(await generate(code)).toBeDefined()
   })
 
-  it('should handle simple type alias with type reference', async () => {
+  it('should handle type alias with type reference', async () => {
     const code = `
     type Age = number
     type Gender = 'male' | 'female'
@@ -370,7 +370,7 @@ describe('generate function', () => {
     expect(await generate(code)).toBeDefined()
   })
 
-  it('should handle simple type alias with nested literal', async () => {
+  it('should handle type alias with nested literal', async () => {
     const code = `
     type Age = number
     type Gender = 'male' | 'female'
@@ -386,7 +386,7 @@ describe('generate function', () => {
     expect(await generate(code)).toBeDefined()
   })
 
-  it('should handle simple type alias with intersection type', async () => {
+  it('should handle type alias with intersection type', async () => {
     const code = `
     type Age = number
     type Gender = 'male' | 'female'

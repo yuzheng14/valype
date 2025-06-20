@@ -1,9 +1,4 @@
-import {
-  parseAsync,
-  type Directive,
-  type Statement,
-  type TSInterfaceDeclaration,
-} from 'oxc-parser'
+import { parseAsync, type Directive, type Statement } from 'oxc-parser'
 import {
   extractSpan,
   ValypeReferenceError,
@@ -14,7 +9,8 @@ import { mapTSInterfaceDeclaration } from './map/map'
 import {
   createGenerateContext,
   createTranslationContext,
-  type InterfaceInfo,
+  type DeclarationInfo,
+  type TSDeclaration,
 } from './context'
 
 export interface Export {
@@ -24,21 +20,26 @@ export interface Export {
   schema: string
 }
 
-/** extract TSInterfaceDeclaration from Statement */
-function extractTSInterfaceDeclaration(
+/** extract TS*Declaration from Statement */
+function extractTSDeclaration(
   node: Directive | Statement,
-): (TSInterfaceDeclaration & Pick<InterfaceInfo, 'exported'>) | void {
-  if (
-    node.type === 'ExportNamedDeclaration' &&
-    node.declaration?.type === 'TSInterfaceDeclaration'
+): (TSDeclaration & Pick<DeclarationInfo, 'exported'>) | void {
+  if (node.type === 'ExportNamedDeclaration') {
+    if (
+      node.declaration?.type === 'TSInterfaceDeclaration' ||
+      node.declaration?.type === 'TSTypeAliasDeclaration'
+    )
+      // for `export interface Name ...` or `export type T = ...`
+      return {
+        ...node.declaration,
+        exported: true,
+      }
+    else return
+  } else if (
+    node.type === 'TSInterfaceDeclaration' ||
+    node.type === 'TSTypeAliasDeclaration'
   )
-    // for `export interface Name ...`
-    return {
-      ...node.declaration,
-      exported: true,
-    }
-  else if (node.type === 'TSInterfaceDeclaration')
-    // for `interface Name ...`
+    // for `interface Name ...` or `type T = `
     return { ...node, exported: false }
   else return
 }
@@ -68,7 +69,7 @@ export async function generate(
 
   // collect all interface declarations
   for (const stmt of ast.program.body) {
-    const node = extractTSInterfaceDeclaration(stmt)
+    const node = extractTSDeclaration(stmt)
     if (!node) continue
 
     const name = node.id.name
@@ -98,13 +99,18 @@ export async function generate(
   }
 
   // Start processing from exported interfaces
-  let intfInfo = ctx.pending.shift() as InterfaceInfo // handled length === 0 above, so it must exist
+  let intfInfo = ctx.pending.shift() as DeclarationInfo // handled length === 0 above, so it must exist
   let body = ''
   let pending = ''
   do {
     if (ctx.processed.has(intfInfo.name)) continue
     const context = createTranslationContext()
 
+    if (intfInfo.node.type === 'TSTypeAliasDeclaration')
+      return new ValypeUnimplementedError(
+        'type alias',
+        extractSpan(intfInfo.node),
+      )
     let intfDecl = mapTSInterfaceDeclaration(intfInfo.node, context)
     if (intfDecl instanceof Error) return intfDecl
     ctx.processed.add(intfInfo.name)

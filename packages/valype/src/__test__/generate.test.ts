@@ -328,6 +328,92 @@ describe('generate function', () => {
     `)
   })
 
+  it('should handle simple type alias', async () => {
+    const code = `
+    export type Age = number
+    export type Gender = 'male' | 'female'
+    `
+    expect(await generate(code)).toBeDefined()
+  })
+
+  it('should handle simple type alias with literal', async () => {
+    const code = `
+    type Age = number
+    type Gender = 'male' | 'female'
+    export type Person = {
+      age: Age
+      gender: Gender | 'unknown'
+    }
+    export type User = Person
+    `
+    expect(await generate(code)).toBeDefined()
+  })
+
+  it('should handle simple type alias with type reference', async () => {
+    const code = `
+    type Age = number
+    type Gender = 'male' | 'female'
+    type Tel = {
+      areaCode?: string | null
+      tel: string | undefined
+    }
+    export type Person = {
+      age: Age
+      gender: Gender | 'unknown'
+      address?: {
+        city: string
+        postalCode: string
+      }
+      tel?: Tel | string | null
+    }
+    `
+    expect(await generate(code)).toBeDefined()
+  })
+
+  it('should handle simple type alias with nested literal', async () => {
+    const code = `
+    type Age = number
+    type Gender = 'male' | 'female'
+    export type Person = {
+      age: Age
+      gender: Gender | 'unknown'
+      address?: {
+        city: string
+        postalCode: string
+      }
+    }
+    `
+    expect(await generate(code)).toBeDefined()
+  })
+
+  it('should handle simple type alias with intersection type', async () => {
+    const code = `
+    type Age = number
+    type Gender = 'male' | 'female'
+    type Contact = {
+      email: string
+    }
+    type Tel = {
+      areaCode?: string | null
+      tel: string | undefined
+    }
+    type Address = {
+      city: string
+      postalCode: string
+    }
+    type PersonBase = {
+      age: Age
+      gender: Gender | 'unknown'
+    }
+    type PersonDetails = {
+      address?: Address
+      tel?: Tel | string | null
+    }
+    export type Person = PersonBase & PersonDetails & Contact
+    `
+    expect(await generate(code)).toBeDefined()
+  })
+
   describe('from production environment', () => {
     it('协同调阅', async () => {
       const code = `

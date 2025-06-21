@@ -56,3 +56,13 @@ try {
   // handle validation errors
 }
 ```
+
+> [!WARNING]
+>
+> The current implementation of `is${schemaName}` and `assert${schemaName}` APIs cannot provide full type hinting functionality as the TypeScript plugin is still under development.
+>
+> Progress can be tracked in these issues:
+> * [vscode extension adding typescript plugin automatically #5](https://github.com/yuzheng14/valype/issues/5)
+> * [typescript plugin to provide type definition of generated validation schema #6](https://github.com/yuzheng14/valype/issues/6)
+>
+> These features will be implemented in future releases. The current version still performs runtime validation, but lacks static type hints.

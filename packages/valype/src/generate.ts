@@ -5,7 +5,7 @@ import {
   ValypeSyntaxError,
   ValypeUnimplementedError,
 } from './error'
-import { mapTSInterfaceDeclaration } from './map/map'
+import { mapTSInterfaceDeclaration, mapTSTypeAliasDeclaration } from './map/map'
 import {
   createGenerateContext,
   createTranslationContext,
@@ -106,12 +106,10 @@ export async function generate(
     if (ctx.processed.has(intfInfo.name)) continue
     const context = createTranslationContext()
 
+    let intfDecl
     if (intfInfo.node.type === 'TSTypeAliasDeclaration')
-      return new ValypeUnimplementedError(
-        'type alias',
-        extractSpan(intfInfo.node),
-      )
-    let intfDecl = mapTSInterfaceDeclaration(intfInfo.node, context)
+      intfDecl = mapTSTypeAliasDeclaration(intfInfo.node, context)
+    else intfDecl = mapTSInterfaceDeclaration(intfInfo.node, context)
     if (intfDecl instanceof Error) return intfDecl
     ctx.processed.add(intfInfo.name)
 

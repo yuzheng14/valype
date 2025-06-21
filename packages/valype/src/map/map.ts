@@ -12,6 +12,7 @@ import type {
   TSPropertySignature,
   TSSignature,
   TSType,
+  TSTypeAliasDeclaration,
   TSTypeLiteral,
   TSTypeName,
   TSTypeReference,
@@ -222,4 +223,11 @@ export function mapTSInterfaceDeclaration(
   if (signatures instanceof Error) return signatures
 
   return `${header}\n${extension.map((e) => `  ...${e},\n`).join('')}${signatures.map((s) => `  ${s},\n`).join('')}})`
+}
+
+export function mapTSTypeAliasDeclaration(
+  node: TSTypeAliasDeclaration,
+  context: TranslationContext,
+) {
+  return mapTSType(node.typeAnnotation, context)
 }

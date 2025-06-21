@@ -89,11 +89,25 @@ describe('unplugin-valype', () => {
             const result = UserSchema.safeParse(data);
             return result.error?.issues;
           }
+          function isUser(data) {
+            return validateUser(data) === void 0;
+          }
+          function assertUser(data) {
+            const issues = validateUser(data);
+            if (issues) throw issues;
+          }
 
           const result = validateUser({
             name: "John Doe"
           });
-          console.log(result);
+          console.log(\`result ==>\`, result);
+          const is = isUser({ name: "1", age: 2, email: "3" });
+          console.log(\`is ==>\`, is);
+          try {
+            assertUser({ message: "What can I say? Man!" });
+          } catch (error) {
+            console.log(\`error ==>\`, error);
+          }
           ",
                 "names": "index",
               },
@@ -126,7 +140,28 @@ describe('unplugin-valype', () => {
         )
 
         expect(stdout).toMatchInlineSnapshot(`
-          "[
+          "result ==> [
+            {
+              expected: 'number',
+              code: 'invalid_type',
+              path: [ 'age' ],
+              message: 'Invalid input: expected number, received undefined'
+            },
+            {
+              expected: 'string',
+              code: 'invalid_type',
+              path: [ 'email' ],
+              message: 'Invalid input: expected string, received undefined'
+            }
+          ]
+          is ==> true
+          error ==> [
+            {
+              expected: 'string',
+              code: 'invalid_type',
+              path: [ 'name' ],
+              message: 'Invalid input: expected string, received undefined'
+            },
             {
               expected: 'number',
               code: 'invalid_type',

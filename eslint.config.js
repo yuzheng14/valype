@@ -45,7 +45,7 @@ export default defineConfig([
     language: 'css/css',
     extends: ['css/recommended'],
   },
-  eslintPluginPrettierRecommended,
+  { ...eslintPluginPrettierRecommended, ignores: ['**/*.md'] },
   {
     rules: {
       // @eslint/markdown doesn't support GitHub Flavored Markdown (GFM) Alerts yet eslint/markdown#294

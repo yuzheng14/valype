@@ -26,4 +26,5 @@ jobs:
           cd packages/valype && bun publish
           cd ../plugin && bun publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # it seemed like bun uses NPM_CONFIG_TOKEN to auth
+          NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}

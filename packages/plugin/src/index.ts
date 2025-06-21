@@ -84,7 +84,16 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = () => {
               `export function validate${e.interface}(data: unknown): $ZodIssue[] | undefined {
   const result = ${e.schema}.safeParse(data)
   return result.error?.issues
-            }`,
+}
+
+export function is${e.interface}(data: unknown): data is ${e.interface} {
+  return validate${e.interface}(data) === undefined
+}
+
+export function assert${e.interface}(data: unknown): asserts data is ${e.interface} {
+  const issues = validate${e.interface}(data)
+  if (issues) throw issues
+}`,
           )
           .join('\n'),
       )

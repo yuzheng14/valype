@@ -48,6 +48,7 @@ export default defineConfig({
         items: [
           { text: 'What is Valype?', link: '/what-is-valype' },
           { text: 'Getting Started', link: '/getting-started' },
+          { text: 'API Reference', link: '/api-reference' },
         ],
       },
     ],

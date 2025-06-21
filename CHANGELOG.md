@@ -1,3 +1,12 @@
+## [0.0.8](https://github.com/yuzheng14/valype/compare/v0.0.7...v0.0.8) (2025-06-21)
+
+
+### Features
+
+* **plugin:** :sparkles: add schema validation APIs and documentation ([#31](https://github.com/yuzheng14/valype/issues/31)) ([c562544](https://github.com/yuzheng14/valype/commit/c5625442c78042e34f005a513c0a077bc4fcda60))
+
+
+
 ## [0.0.7](https://github.com/yuzheng14/valype/compare/v0.0.6...v0.0.7) (2025-06-19)
 
 

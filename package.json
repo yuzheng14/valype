@@ -15,6 +15,7 @@
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.5.0",
     "globals": "^16.2.0",
+    "jsonc-parser": "^3.3.1",
     "prettier": "^3.5.3",
     "tsdown": "^0.12.8",
     "typescript": "^5.8.3",
@@ -29,7 +30,7 @@
     "build": "bun -b -F \"*valype\" build",
     "playground": "bun -b -F playground dev",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "bump": "bumpp -r --all --execute \"bun -b changelog\"",
+    "bump": "bumpp -r --all --execute \"bun run ./scripts/bump-version.ts\"",
     "check:type": "tsc -b --noEmit"
   },
   "type": "module",

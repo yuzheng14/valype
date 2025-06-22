@@ -1,0 +1,14 @@
+{
+  "name": "@valype/typescript-plugin",
+  "module": "src/index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@volar/typescript": "^2.4.14"
+  }
+}

@@ -15,6 +15,8 @@
 
 # Valype 🐉
 
+![Alt](https://repobeats.axiom.co/api/embed/21d8a2a1bd32ca3de06711098fe077905c5e8adf.svg "Repobeats analytics image")
+
 **TypeScript 运行时验证器** - 从类型定义生成验证逻辑
 
 > [!WARNING]

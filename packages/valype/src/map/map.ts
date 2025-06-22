@@ -7,8 +7,10 @@ import type {
   TSInterfaceBody,
   TSInterfaceDeclaration,
   TSInterfaceHeritage,
+  TSIntersectionType,
   TSLiteral,
   TSLiteralType,
+  TSParenthesizedType,
   TSPropertySignature,
   TSSignature,
   TSType,
@@ -69,6 +71,27 @@ function mapTSArrayType(node: TSArrayType, context: TranslationContext) {
   const result = mapTSType(node.elementType, context)
   if (result instanceof Error) return result
   return `z.array(${result})`
+}
+
+function mapTSParenthesizedType(
+  node: TSParenthesizedType,
+  context: TranslationContext,
+) {
+  return mapTSType(node.typeAnnotation, context)
+}
+
+function mapTSIntersectionType(
+  node: TSIntersectionType,
+  context: TranslationContext,
+) {
+  const types: string[] = []
+  for (const type of node.types) {
+    const result = mapTSType(type, context)
+    if (result instanceof Error) return result
+    types.push(result)
+  }
+  console.log(types)
+  return types.shift()! + types.map((type) => `.and(${type})`).join('')
 }
 
 function mapTSUnionType(node: TSUnionType, context: TranslationContext) {
@@ -147,6 +170,10 @@ function mapTSType(
       return mapTSKeyword(node)
     case 'TSArrayType':
       return mapTSArrayType(node, context)
+    case 'TSParenthesizedType':
+      return mapTSParenthesizedType(node, context)
+    case 'TSIntersectionType':
+      return mapTSIntersectionType(node, context)
     case 'TSUnionType':
       return mapTSUnionType(node, context)
     case 'TSLiteralType':

@@ -6,7 +6,8 @@
     "changelog",
     "readme",
     "website",
-    "valype & plugin"
+    "valype & plugin",
+    "typescript"
   ],
   "cSpell.words": [
     "intf",

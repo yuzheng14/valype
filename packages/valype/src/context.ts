@@ -9,7 +9,7 @@ export interface DeclarationInfo {
 
 export interface GenerateContext {
   code: string
-  intf: Map<string, DeclarationInfo>
+  decl: Map<string, DeclarationInfo>
   /** interfaces to be process */
   pending: DeclarationInfo[]
   processed: Set<string>
@@ -20,7 +20,7 @@ export function createGenerateContext(
 ): GenerateContext {
   return {
     code,
-    intf: new Map(),
+    decl: new Map(),
     pending: [],
     processed: new Set(),
   }

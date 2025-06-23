@@ -24,24 +24,17 @@ export interface Export {
 function extractTSDeclaration(
   node: Directive | Statement,
 ): (TSDeclaration & Pick<DeclarationInfo, 'exported'>) | void {
-  if (node.type === 'ExportNamedDeclaration') {
-    if (
-      node.declaration?.type === 'TSInterfaceDeclaration' ||
-      node.declaration?.type === 'TSTypeAliasDeclaration'
-    )
-      // for `export interface Name ...` or `export type T = ...`
-      return {
-        ...node.declaration,
-        exported: true,
-      }
-    else return
-  } else if (
-    node.type === 'TSInterfaceDeclaration' ||
-    node.type === 'TSTypeAliasDeclaration'
-  )
-    // for `interface Name ...` or `type T = `
-    return { ...node, exported: false }
-  else return
+  const decl = node.type === 'ExportNamedDeclaration' ? node.declaration : node
+
+  if (
+    decl?.type === 'TSInterfaceDeclaration' ||
+    decl?.type === 'TSTypeAliasDeclaration'
+  ) {
+    return {
+      ...decl,
+      exported: node.type === 'ExportNamedDeclaration',
+    }
+  }
 }
 
 export interface GenerateResult {
@@ -74,7 +67,7 @@ export async function generate(
 
     const name = node.id.name
 
-    if (ctx.intf.has(name))
+    if (ctx.decl.has(name))
       return new ValypeUnimplementedError(
         'interface merging',
         extractSpan(node),
@@ -85,7 +78,7 @@ export async function generate(
       node,
       exported: node.exported,
     }
-    ctx.intf.set(name, intfInfo)
+    ctx.decl.set(name, intfInfo)
     if (node.exported) ctx.pending.push(intfInfo)
   }
 
@@ -98,45 +91,48 @@ export async function generate(
     exports: [],
   }
 
-  // Start processing from exported interfaces
-  let intfInfo = ctx.pending.shift() as DeclarationInfo // handled length === 0 above, so it must exist
-  let body = ''
+  const chunks: string[] = []
   let pending = ''
-  do {
-    if (ctx.processed.has(intfInfo.name)) continue
+  while (true) {
+    const declInfo = ctx.pending.shift()
+
+    if (!declInfo) break
+    if (ctx.processed.has(declInfo.name)) continue
+
     const context = createTranslationContext()
+    const declRaw =
+      declInfo.node.type === 'TSTypeAliasDeclaration'
+        ? mapTSTypeAliasDeclaration(declInfo.node, context)
+        : mapTSInterfaceDeclaration(declInfo.node, context)
+    if (declRaw instanceof Error) return declRaw
+    ctx.processed.add(declInfo.name)
 
-    let intfDecl
-    if (intfInfo.node.type === 'TSTypeAliasDeclaration')
-      intfDecl = mapTSTypeAliasDeclaration(intfInfo.node, context)
-    else intfDecl = mapTSInterfaceDeclaration(intfInfo.node, context)
-    if (intfDecl instanceof Error) return intfDecl
-    ctx.processed.add(intfInfo.name)
-
-    intfDecl = `const ${intfInfo.name}Schema = ${intfDecl}\n\n`
-    if (intfInfo.exported) {
-      intfDecl = `export ` + intfDecl
+    const decl = `const ${declInfo.name}Schema = ${declRaw}\n\n`
+    const wrappedDecl = declInfo.exported ? `export ${decl}` : decl
+    if (declInfo.exported) {
       result.exports.push({
-        interface: intfInfo.name,
-        schema: `${intfInfo.name}Schema`,
+        interface: declInfo.name,
+        schema: `${declInfo.name}Schema`,
       })
-      body += pending
+      // flush previous pending before exported item
+      chunks.push(pending)
       pending = ''
     }
 
-    pending = intfDecl + pending
+    pending = wrappedDecl + pending
 
-    const span = extractSpan(intfInfo.node)
+    const span = extractSpan(declInfo.node)
     for (const ref of context.dependencies) {
       if (ctx.processed.has(ref)) continue
-      const intfInfo = ctx.intf.get(ref)
+      const intfInfo = ctx.decl.get(ref)
       if (!intfInfo) return new ValypeReferenceError(ref, span)
       if (intfInfo.exported) continue
       ctx.pending.unshift(intfInfo)
     }
-  } while ((intfInfo = ctx.pending.shift()!)) // enter loop only intfInfo exists
+  }
 
-  result.code += body + pending
+  chunks.push(pending)
+  result.code += chunks.join('')
 
   return result
 }

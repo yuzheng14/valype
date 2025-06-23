@@ -49,6 +49,21 @@ describe('generate function', () => {
     `)
   })
 
+  it('should have no exports', async () => {
+    const code = `
+      interface Tel {
+        areaCode?: string | null
+        tel: string | undefined
+      }
+    `
+    expect(await generate(code)).toMatchInlineSnapshot(`
+      {
+        "code": "",
+        "exports": [],
+      }
+    `)
+  })
+
   it('should handle interfaces with union type property', async () => {
     const code = `
       interface Tel {

@@ -90,7 +90,6 @@ function mapTSIntersectionType(
     if (result instanceof Error) return result
     types.push(result)
   }
-  console.log(types)
   return types.shift()! + types.map((type) => `.and(${type})`).join('')
 }
 

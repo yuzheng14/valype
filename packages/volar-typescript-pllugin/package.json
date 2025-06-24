@@ -1,0 +1,16 @@
+{
+  "name": "@valype/volar-typescript-plugin",
+  "module": "src/index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@volar/language-core": "^2.4.14",
+    "@volar/typescript": "^2.4.14",
+    "alien-signals": "^2.0.5"
+  }
+}

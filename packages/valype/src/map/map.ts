@@ -90,7 +90,7 @@ function mapTSIntersectionType(
     if (result instanceof Error) return result
     types.push(result)
   }
-  return types.shift()! + types.map((type) => `.and(${type})`).join('')
+  return types.reduce((acc, cur) => `z.intersection(${acc}, ${cur})`)
 }
 
 function mapTSUnionType(node: TSUnionType, context: TranslationContext) {

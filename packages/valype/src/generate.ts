@@ -1,20 +1,16 @@
-import {
-  parseAsync,
-  type Directive,
-  type Statement,
-  type TSInterfaceDeclaration,
-} from 'oxc-parser'
+import { parseAsync, type Directive, type Statement } from 'oxc-parser'
 import {
   extractSpan,
   ValypeReferenceError,
   ValypeSyntaxError,
   ValypeUnimplementedError,
 } from './error'
-import { mapTSInterfaceDeclaration } from './map/map'
+import { mapTSInterfaceDeclaration, mapTSTypeAliasDeclaration } from './map/map'
 import {
   createGenerateContext,
   createTranslationContext,
-  type InterfaceInfo,
+  type DeclarationInfo,
+  type TSDeclaration,
 } from './context'
 
 export interface Export {
@@ -24,23 +20,21 @@ export interface Export {
   schema: string
 }
 
-/** extract TSInterfaceDeclaration from Statement */
-function extractTSInterfaceDeclaration(
+/** extract TS*Declaration from Statement */
+function extractTSDeclaration(
   node: Directive | Statement,
-): (TSInterfaceDeclaration & Pick<InterfaceInfo, 'exported'>) | void {
+): (TSDeclaration & Pick<DeclarationInfo, 'exported'>) | void {
+  const decl = node.type === 'ExportNamedDeclaration' ? node.declaration : node
+
   if (
-    node.type === 'ExportNamedDeclaration' &&
-    node.declaration?.type === 'TSInterfaceDeclaration'
-  )
-    // for `export interface Name ...`
+    decl?.type === 'TSInterfaceDeclaration' ||
+    decl?.type === 'TSTypeAliasDeclaration'
+  ) {
     return {
-      ...node.declaration,
-      exported: true,
+      ...decl,
+      exported: node.type === 'ExportNamedDeclaration',
     }
-  else if (node.type === 'TSInterfaceDeclaration')
-    // for `interface Name ...`
-    return { ...node, exported: false }
-  else return
+  }
 }
 
 export interface GenerateResult {
@@ -68,12 +62,12 @@ export async function generate(
 
   // collect all interface declarations
   for (const stmt of ast.program.body) {
-    const node = extractTSInterfaceDeclaration(stmt)
+    const node = extractTSDeclaration(stmt)
     if (!node) continue
 
     const name = node.id.name
 
-    if (ctx.intf.has(name))
+    if (ctx.decl.has(name))
       return new ValypeUnimplementedError(
         'interface merging',
         extractSpan(node),
@@ -84,7 +78,7 @@ export async function generate(
       node,
       exported: node.exported,
     }
-    ctx.intf.set(name, intfInfo)
+    ctx.decl.set(name, intfInfo)
     if (node.exported) ctx.pending.push(intfInfo)
   }
 
@@ -97,42 +91,48 @@ export async function generate(
     exports: [],
   }
 
-  // Start processing from exported interfaces
-  let intfInfo = ctx.pending.shift() as InterfaceInfo // handled length === 0 above, so it must exist
-  let body = ''
+  const chunks: string[] = []
   let pending = ''
-  do {
-    if (ctx.processed.has(intfInfo.name)) continue
+  while (true) {
+    const declInfo = ctx.pending.shift()
+
+    if (!declInfo) break
+    if (ctx.processed.has(declInfo.name)) continue
+
     const context = createTranslationContext()
+    const declRaw =
+      declInfo.node.type === 'TSTypeAliasDeclaration'
+        ? mapTSTypeAliasDeclaration(declInfo.node, context)
+        : mapTSInterfaceDeclaration(declInfo.node, context)
+    if (declRaw instanceof Error) return declRaw
+    ctx.processed.add(declInfo.name)
 
-    let intfDecl = mapTSInterfaceDeclaration(intfInfo.node, context)
-    if (intfDecl instanceof Error) return intfDecl
-    ctx.processed.add(intfInfo.name)
-
-    intfDecl = `const ${intfInfo.name}Schema = ${intfDecl}\n\n`
-    if (intfInfo.exported) {
-      intfDecl = `export ` + intfDecl
+    const decl = `const ${declInfo.name}Schema = ${declRaw}\n\n`
+    const wrappedDecl = declInfo.exported ? `export ${decl}` : decl
+    if (declInfo.exported) {
       result.exports.push({
-        interface: intfInfo.name,
-        schema: `${intfInfo.name}Schema`,
+        interface: declInfo.name,
+        schema: `${declInfo.name}Schema`,
       })
-      body += pending
+      // flush previous pending before exported item
+      chunks.push(pending)
       pending = ''
     }
 
-    pending = intfDecl + pending
+    pending = wrappedDecl + pending
 
-    const span = extractSpan(intfInfo.node)
+    const span = extractSpan(declInfo.node)
     for (const ref of context.dependencies) {
       if (ctx.processed.has(ref)) continue
-      const intfInfo = ctx.intf.get(ref)
+      const intfInfo = ctx.decl.get(ref)
       if (!intfInfo) return new ValypeReferenceError(ref, span)
       if (intfInfo.exported) continue
       ctx.pending.unshift(intfInfo)
     }
-  } while ((intfInfo = ctx.pending.shift()!)) // enter loop only intfInfo exists
+  }
 
-  result.code += body + pending
+  chunks.push(pending)
+  result.code += chunks.join('')
 
   return result
 }

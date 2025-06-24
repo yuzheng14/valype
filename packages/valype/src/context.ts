@@ -1,16 +1,17 @@
-import type { TSInterfaceDeclaration } from 'oxc-parser'
+import type { TSInterfaceDeclaration, TSTypeAliasDeclaration } from 'oxc-parser'
 
-export interface InterfaceInfo {
+export type TSDeclaration = TSInterfaceDeclaration | TSTypeAliasDeclaration
+export interface DeclarationInfo {
   name: string
-  node: TSInterfaceDeclaration
+  node: TSDeclaration
   exported: boolean
 }
 
 export interface GenerateContext {
   code: string
-  intf: Map<string, InterfaceInfo>
+  decl: Map<string, DeclarationInfo>
   /** interfaces to be process */
-  pending: InterfaceInfo[]
+  pending: DeclarationInfo[]
   processed: Set<string>
 }
 
@@ -19,7 +20,7 @@ export function createGenerateContext(
 ): GenerateContext {
   return {
     code,
-    intf: new Map(),
+    decl: new Map(),
     pending: [],
     processed: new Set(),
   }

@@ -1,3 +1,12 @@
+## [0.0.9](https://github.com/yuzheng14/valype/compare/v0.0.8...v0.0.9) (2025-06-24)
+
+
+### Features
+
+* **valype:** :sparkles: add type alias supported ([#25](https://github.com/yuzheng14/valype/issues/25)) ([db9c5e7](https://github.com/yuzheng14/valype/commit/db9c5e7f5d8595ab20cd51ed19aced0a0a9ef457))
+
+
+
 ## [0.0.8](https://github.com/yuzheng14/valype/compare/v0.0.7...v0.0.8) (2025-06-21)
 
 

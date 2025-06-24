@@ -1,7 +1,9 @@
 {
   "name": "@valype/typescript-plugin",
-  "module": "src/index.ts",
-  "type": "module",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsdown"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
@@ -9,6 +11,7 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@volar/language-core": "^2.4.14",
     "@volar/typescript": "^2.4.14"
   }
 }

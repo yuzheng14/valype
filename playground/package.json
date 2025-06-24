@@ -17,6 +17,7 @@
     "typescript": "^5.8.3",
     "unplugin-valype": "workspace:*",
     "vite": "^6.3.5",
-    "vue-tsc": "^2.2.10"
+    "vue-tsc": "^2.2.10",
+    "@valype/typescript-plugin": "workspace:*"
   }
 }

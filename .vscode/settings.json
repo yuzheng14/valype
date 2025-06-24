@@ -12,5 +12,6 @@
   "cSpell.words": [
     "intf",
     "valype"
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

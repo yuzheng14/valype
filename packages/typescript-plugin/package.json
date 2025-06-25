@@ -1,0 +1,17 @@
+{
+  "name": "@valype/typescript-plugin",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsdown"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@volar/language-core": "^2.4.14",
+    "@volar/typescript": "^2.4.14"
+  }
+}

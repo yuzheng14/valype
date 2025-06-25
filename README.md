@@ -19,6 +19,10 @@
 
 **TypeScript Runtime Validator** - Generate validation from type definitions
 
+> [!IMPORTANT]
+>
+> **help wanted**: we need a typescript language service plugin to provide type hints, but it's too hard to implement. You can see [issue #6](https://github.com/yuzheng14/valype/issues/6) and [branch feat/typescript-plugin](https://github.com/yuzheng14/valype/tree/feat/typescript-plugin) for more information.
+
 > [!WARNING]
 >
 > Valype is currently under active development. APIs may change in future releases. Please follow [Semver](https://semver.org/) to avoid **breaking changes**.

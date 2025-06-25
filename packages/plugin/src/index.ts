@@ -64,13 +64,18 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = () => {
     const code = await readFile(id, 'utf-8')
     const result = await generate(code)
     if (result instanceof Error) return Object.assign(result, { code })
-    if (result.code && result.exports.length > 0) {
+    if (result.code.content && result.exports.length > 0) {
       // Windows-style path will be escaped in import path,
       // so use formal of uuid v7 + basename as id of virtual module
       const virtualId = v7() + basename(id)
       schemaCache.set(
         virtualId,
-        result.code + '\nexport { type $ZodIssue } from "zod/v4/core"\n',
+        result.code.banner +
+          '\n' +
+          result.code.imports.join('\n') +
+          '\n' +
+          result.code.content +
+          '\nexport { type $ZodIssue } from "zod/v4/core"\n',
       )
       const s = new MagicString(code)
       s.prepend(
@@ -78,24 +83,18 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = () => {
       )
       s.append('\n')
       s.append(
-        result.exports
-          .map(
-            (e) =>
-              `export function validate${e.interface}(data: unknown): $ZodIssue[] | undefined {
-  const result = ${e.schema}.safeParse(data)
-  return result.error?.issues
-}
-
-export function is${e.interface}(data: unknown): data is ${e.interface} {
-  return validate${e.interface}(data) === undefined
-}
-
-export function assert${e.interface}(data: unknown): asserts data is ${e.interface} {
-  const issues = validate${e.interface}(data)
-  if (issues) throw issues
-}`,
-          )
-          .join('\n'),
+        result.validatorImport +
+          '\n' +
+          result.exports
+            .map((e) => {
+              const exports = result.generateValidator(e.interface, e.schema)
+              return [
+                exports.banner,
+                exports.imports.join('\n'),
+                exports.content,
+              ].join('\n')
+            })
+            .join('\n'),
       )
       s.append('\n')
       const transformed: TransformResult = {

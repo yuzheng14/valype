@@ -1,4 +1,10 @@
-import { parseAsync, type Directive, type Statement } from 'oxc-parser'
+import {
+  parseAsync,
+  ParseResult,
+  parseSync,
+  type Directive,
+  type Statement,
+} from 'oxc-parser'
 import {
   extractSpan,
   ValypeReferenceError,
@@ -10,6 +16,7 @@ import {
   createGenerateContext,
   createTranslationContext,
   type DeclarationInfo,
+  type GenerateContext,
   type TSDeclaration,
 } from './context'
 
@@ -86,23 +93,14 @@ export function assert${decl}(data: unknown): asserts data is ${decl} {
   }
 }
 
-/**
- * convert TypeScript interface definitions to Zod schema
- * @param code content of typeScript file
- * @returns generated Zod schema code as a string
- */
-export async function generate(
-  code: string,
-): Promise<
+function internalGenerate(
+  ast: ParseResult,
+  ctx: GenerateContext,
+):
   | GenerateResult
   | ValypeUnimplementedError
-  | ValypeReferenceError
   | ValypeSyntaxError
-> {
-  const ast = await parseAsync('temp.ts', code)
-
-  const ctx = createGenerateContext(code)
-
+  | ValypeReferenceError {
   // collect all interface declarations
   for (const stmt of ast.program.body) {
     const node = extractTSDeclaration(stmt)
@@ -177,4 +175,43 @@ export async function generate(
   result.code.content += chunks.join('')
 
   return result
+}
+
+/**
+ * convert TypeScript interface definitions to Zod schema
+ * @param code content of typeScript file
+ * @returns generated Zod schema code as a string
+ */
+export async function generate(
+  code: string,
+): Promise<
+  | GenerateResult
+  | ValypeUnimplementedError
+  | ValypeReferenceError
+  | ValypeSyntaxError
+> {
+  const ast = await parseAsync('temp.ts', code)
+
+  const ctx = createGenerateContext(code)
+
+  return internalGenerate(ast, ctx)
+}
+
+/**
+ * convert TypeScript interface definitions to Zod schema synchronously
+ * @param code content of typeScript file
+ * @returns generated Zod schema code as a string
+ */
+export function generateSync(
+  code: string,
+):
+  | GenerateResult
+  | ValypeUnimplementedError
+  | ValypeReferenceError
+  | ValypeSyntaxError {
+  const ast = parseSync('temp.ts', code)
+
+  const ctx = createGenerateContext(code)
+
+  return internalGenerate(ast, ctx)
 }

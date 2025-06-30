@@ -30,4 +30,7 @@ features:
   - icon: 🛡️
     title: Unified type validation
     details: Define types once and get runtime validation automatically
+  - icon: 💻
+    title: IDE Support
+    details: TypeScript plugin provides editor support for .valype.ts files
 ---

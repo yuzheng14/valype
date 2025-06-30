@@ -38,6 +38,10 @@ Valype is a **TypeScript Runtime Validator** that automatically generates runtim
 
   Returns standard Zod issues when validation fails, making it easy to integrate with existing error handling.
 
+- 💻 **TypeScript Plugin Support**
+
+  The official TypeScript plugin provides full IDE support for `.valype.ts` files, including type checking, code completion and more.
+
 ## How It Works
 
 1. Define TypeScript types/interfaces in `.valype.ts` files

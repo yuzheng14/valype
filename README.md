@@ -15,13 +15,9 @@
 
 # Valype 🐉
 
-![Alt](https://repobeats.axiom.co/api/embed/21d8a2a1bd32ca3de06711098fe077905c5e8adf.svg "Repobeats analytics image")
+![Alt](https://repobeats.axiom.co/api/embed/21d8a2a1bd32ca3de06711098fe077905c5e8adf.svg 'Repobeats analytics image')
 
 **TypeScript Runtime Validator** - Generate validation from type definitions
-
-> [!IMPORTANT]
->
-> **help wanted**: we need a typescript language service plugin to provide type hints, but it's too hard to implement. You can see [issue #6](https://github.com/yuzheng14/valype/issues/6) and [branch feat/typescript-plugin](https://github.com/yuzheng14/valype/tree/feat/typescript-plugin) for more information.
 
 > [!WARNING]
 >
@@ -30,7 +26,7 @@
 - 🎯 Type-safe validation with TypeScript type inference
 - 🔌 Seamless unplugin integration (Vite/Rollup/esbuild/Astro/Farm/Nuxt/Rspack/Webpack)
 - 🛡️ Unified type validation
-- 🚧 TypeScript plugin (WIP)
+- 💻 TypeScript plugin for IDE support
 - 🚧 IDE/editor extension support (WIP)
 
 Valype = Validate + Type. Automatically generates runtime validators from TypeScript type definitions.
@@ -61,7 +57,29 @@ bun add -D unplugin-valype
 
 2. Configure plugin for your build tool following [unplugin-valype docs](./packages/plugin/README.md)
 
-3. Define your types (use `.valype.ts` extension):
+3. For TypeScript language support, install the plugin:
+
+```bash
+npm install -D @valype/typescript-plugin
+```
+
+Then add to your tsconfig.json:
+
+```json
+{
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "@valype/typescript-plugin"
+      }
+    ]
+  }
+}
+```
+
+> For VSCode users, ensure you're using the workspace version of TypeScript
+
+4. Define your types (use `.valype.ts` extension):
 
 ```typescript
 // user.valype.ts

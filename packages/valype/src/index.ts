@@ -1,4 +1,5 @@
-export { generate } from './generate'
+export { generate, generateSync } from './generate'
+export type { Code, GenerateResult, Export } from './generate'
 export {
   ValypeReferenceError,
   ValypeUnimplementedError,

@@ -13,10 +13,10 @@
     "zod": "^3.25.58"
   },
   "devDependencies": {
+    "@valype/typescript-plugin": "workspace:*",
     "@vitejs/plugin-vue": "^5.2.4",
     "typescript": "^5.8.3",
     "unplugin-valype": "workspace:*",
-    "vite": "^6.3.5",
     "vue-tsc": "^2.2.10"
   }
 }

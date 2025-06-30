@@ -8,9 +8,5 @@
     "build": "vitepress build",
     "preview": "vitepress preview"
   },
-  "type": "module",
-  "devDependencies": {
-    "vitepress": "^2.0.0-alpha.6",
-    "vitepress-plugin-group-icons": "^1.6.0"
-  }
+  "type": "module"
 }

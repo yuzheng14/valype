@@ -1,3 +1,12 @@
+## [0.0.10](https://github.com/yuzheng14/valype/compare/v0.0.9...v0.0.10) (2025-06-30)
+
+
+### Features
+
+* **typescript:** ✨ add @valype/typescript-plugin to provide type infos ([#33](https://github.com/yuzheng14/valype/issues/33)) ([004d2ec](https://github.com/yuzheng14/valype/commit/004d2ec64ac26ffc763628cf8e39cbe40804a3d3))
+
+
+
 ## [0.0.9](https://github.com/yuzheng14/valype/compare/v0.0.8...v0.0.9) (2025-06-24)
 
 

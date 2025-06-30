@@ -2,8 +2,6 @@
 
 TypeScript language service plugin that provides IDE support for `.valype.ts` files.
 
-[中文](./README.zh-CN.md)
-
 ## Features
 
 - Recognizes `.valype.ts` file extension
@@ -13,12 +11,25 @@ TypeScript language service plugin that provides IDE support for `.valype.ts` fi
 
 ## Installation
 
-```bash
-npm install -D @valype/typescript-plugin # for npm users
-yarn add -D @valype/typescript-plugin # for yarn users
-pnpm add -D @valype/typescript-plugin # for pnpm users
-bun add -D @valype/typescript-plugin # for bun users
+::: code-group
+
+```bash [npm]
+npm install -D @valype/typescript-plugin
 ```
+
+```bash [yarn]
+yarn add -D @valype/typescript-plugin
+```
+
+```bash [pnpm]
+pnpm add -D @valype/typescript-plugin
+```
+
+```bash [bun]
+bun add -D @valype/typescript-plugin
+```
+
+:::
 
 ## Usage
 
@@ -39,7 +50,6 @@ bun add -D @valype/typescript-plugin # for bun users
 2. Create `.valype.ts` files and start writing valype code
 
 3. For VSCode users, ensure you're using the workspace version of TypeScript:
-
    - Open a TypeScript file in VSCode
    - Click the TypeScript version number in the status bar
    - Select "Use Workspace Version" from the dropdown

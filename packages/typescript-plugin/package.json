@@ -1,9 +1,7 @@
 {
   "name": "@valype/typescript-plugin",
-  "main": "./dist/index.js",
-  "scripts": {
-    "build": "tsdown"
-  },
+  "main": "./dist/index.cjs",
+  "type": "module",
   "devDependencies": {
     "@types/bun": "latest"
   },
@@ -12,6 +10,11 @@
   },
   "dependencies": {
     "@volar/language-core": "^2.4.14",
-    "@volar/typescript": "^2.4.14"
+    "@volar/typescript": "^2.4.14",
+    "alien-signals": "^2.0.5",
+    "valype": "workspace:*"
+  },
+  "scripts": {
+    "build": "tsdown"
   }
 }

@@ -2,6 +2,7 @@
   "name": "@valype/typescript-plugin",
   "main": "./dist/index.cjs",
   "type": "module",
+  "version": "0.0.10",
   "devDependencies": {
     "@types/bun": "latest"
   },

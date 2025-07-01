@@ -27,6 +27,15 @@
         "vitest": "^3.2.4",
       },
     },
+    "language-tools/language-server": {
+      "name": "@valype/language-server",
+      "devDependencies": {
+        "@types/bun": "latest",
+      },
+      "peerDependencies": {
+        "typescript": "^5",
+      },
+    },
     "language-tools/typescript-plugin": {
       "name": "@valype/typescript-plugin",
       "version": "0.0.11",
@@ -485,6 +494,8 @@
     "@typescript-eslint/visitor-keys": ["@typescript-eslint/visitor-keys@8.37.0", "", { "dependencies": { "@typescript-eslint/types": "8.37.0", "eslint-visitor-keys": "^4.2.1" } }, "sha512-YzfhzcTnZVPiLfP/oeKtDp2evwvHLMe0LOy7oe+hb9KKIumLNohYS9Hgp1ifwpu42YWxhZE8yieggz6JpqO/1w=="],
 
     "@ungap/structured-clone": ["@ungap/structured-clone@1.3.0", "", {}, "sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g=="],
+
+    "@valype/language-server": ["@valype/language-server@workspace:language-tools/language-server"],
 
     "@valype/typescript-plugin": ["@valype/typescript-plugin@workspace:language-tools/typescript-plugin"],
 

@@ -41,7 +41,8 @@
     "packages/*",
     "playground",
     "website",
-    "extension/*"
+    "extension/*",
+    "language-tools/*"
   ],
   "overrides": {
     "vitepress": "next",

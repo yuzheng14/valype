@@ -8,7 +8,8 @@
     "website",
     "valype & plugin",
     "typescript",
-    "vscode"
+    "vscode",
+    "language-server"
   ],
   "cSpell.words": [
     "intf",

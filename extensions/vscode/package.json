@@ -1,0 +1,11 @@
+{
+  "name": "vscode-valype",
+  "module": "src/extension.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

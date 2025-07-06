@@ -1,11 +1,40 @@
 {
   "name": "vscode-valype",
-  "module": "src/extension.ts",
+  "displayName": "Valype",
+  "description": "A VS Code extension for valype.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.55.0"
+  },
+  "activationEvents": [
+    "onLanguage:valype"
+  ],
+  "main": "dist/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "valype",
+        "extensions": [
+          ".valype.ts"
+        ]
+      }
+    ]
+  },
   "type": "module",
   "devDependencies": {
+    "vscode-languageclient": "^9.0.1",
+    "@volar/language-server": "^2.4.16",
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "@types/vscode": "^1.101.0",
+    "@volar/vscode": "^2.4.16",
+    "reactive-vscode": "^0.3.0"
+  },
+  "scripts": {
+    "build": "tsdown"
   }
 }

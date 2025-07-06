@@ -41,7 +41,7 @@
     "packages/*",
     "playground",
     "website",
-    "extension/*",
+    "extensions/*",
     "language-tools/*"
   ],
   "overrides": {

@@ -1,11 +1,9 @@
 import { createLanguageServicePlugin } from '@volar/typescript/lib/quickstart/createLanguageServicePlugin'
-import { getValyePlugin } from './language'
+import { createPlugin } from '@valype/language-core'
 
-const plugin = createLanguageServicePlugin((_ts, info) => {
-  const logger = info.project.projectService.logger
-
+const plugin = createLanguageServicePlugin((_ts, _info) => {
   return {
-    languagePlugins: [getValyePlugin({ logger })],
+    languagePlugins: [createPlugin((scriptId) => scriptId)],
   }
 })
 

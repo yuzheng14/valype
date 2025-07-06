@@ -50,6 +50,10 @@ export default defineConfig([
     rules: {
       // @eslint/markdown doesn't support GitHub Flavored Markdown (GFM) Alerts yet eslint/markdown#294
       'markdown/no-missing-label-refs': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_' },
+      ],
     },
   },
 ])

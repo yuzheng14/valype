@@ -10,7 +10,8 @@
     "typescript",
     "vscode",
     "language-server",
-    "language-core"
+    "language-core",
+    "language-tools"
   ],
   "cSpell.words": [
     "intf",

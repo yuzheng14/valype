@@ -10,10 +10,8 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "@volar/language-core": "^2.4.14",
     "@volar/typescript": "^2.4.14",
-    "alien-signals": "^2.0.5",
-    "valype": "workspace:*"
+    "@valype/language-core": "workspace:*"
   },
   "scripts": {
     "build": "tsdown"

@@ -1,11 +1,22 @@
 {
   "name": "@valype/language-core",
-  "module": "src/index.ts",
   "type": "module",
+  "main": "./dist/index.js",
+  "exports": "./dist/index.js",
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@volar/typescript": "^2.4.17"
   },
   "peerDependencies": {
     "typescript": "^5"
-  }
+  },
+  "dependencies": {
+    "@volar/language-core": "^2.4.17",
+    "alien-signals": "^2.0.5",
+    "valype": "workspace:*"
+  },
+  "scripts": {
+    "build": "tsdown"
+  },
+  "version": "0.0.10"
 }

@@ -46,8 +46,15 @@
     },
     "language-tools/language-core": {
       "name": "@valype/language-core",
+      "version": "0.0.10",
+      "dependencies": {
+        "@volar/language-core": "^2.4.17",
+        "alien-signals": "^2.0.5",
+        "valype": "workspace:*",
+      },
       "devDependencies": {
         "@types/bun": "latest",
+        "@volar/typescript": "^2.4.17",
       },
       "peerDependencies": {
         "typescript": "^5",
@@ -66,10 +73,8 @@
       "name": "@valype/typescript-plugin",
       "version": "0.0.11",
       "dependencies": {
-        "@volar/language-core": "^2.4.14",
+        "@valype/language-core": "workspace:*",
         "@volar/typescript": "^2.4.14",
-        "alien-signals": "^2.0.5",
-        "valype": "workspace:*",
       },
       "devDependencies": {
         "@types/bun": "latest",

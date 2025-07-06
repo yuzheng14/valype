@@ -9,7 +9,8 @@
     "valype & plugin",
     "typescript",
     "vscode",
-    "language-server"
+    "language-server",
+    "language-core"
   ],
   "cSpell.words": [
     "intf",

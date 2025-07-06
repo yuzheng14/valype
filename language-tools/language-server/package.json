@@ -1,11 +1,11 @@
 {
   "name": "@valype/language-server",
   "module": "src/index.ts",
-  "type": "module",
   "devDependencies": {
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5"
-  }
+  },
+  "type": "module"
 }

@@ -40,7 +40,9 @@
   "workspaces": [
     "packages/*",
     "playground",
-    "website"
+    "website",
+    "extensions/*",
+    "language-tools/*"
   ],
   "overrides": {
     "vitepress": "next",

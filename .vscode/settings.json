@@ -7,7 +7,11 @@
     "readme",
     "website",
     "valype & plugin",
-    "typescript"
+    "typescript",
+    "vscode",
+    "language-server",
+    "language-core",
+    "language-tools"
   ],
   "cSpell.words": [
     "intf",

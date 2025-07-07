@@ -62,8 +62,16 @@
     },
     "language-tools/language-server": {
       "name": "@valype/language-server",
+      "bin": {
+        "valype-language-server": "./bin/valype-language-server.js",
+      },
+      "dependencies": {
+        "@valype/language-core": "workspace:*",
+        "@volar/language-server": "^2.4.17",
+      },
       "devDependencies": {
         "@types/bun": "latest",
+        "vscode-uri": "^3.1.0",
       },
       "peerDependencies": {
         "typescript": "^5",

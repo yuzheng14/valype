@@ -1,11 +1,22 @@
 {
   "name": "@valype/language-server",
-  "module": "src/index.ts",
+  "bin": {
+    "valype-language-server": "./bin/valype-language-server.js"
+  },
+  "dependencies": {
+    "@valype/language-core": "workspace:*",
+    "@volar/language-server": "^2.4.17"
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "vscode-uri": "^3.1.0"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
-  "type": "module"
+  "type": "module",
+  "scripts": {
+    "build": "tsdown",
+    "dev": "bun run --watch src/index.ts"
+  }
 }

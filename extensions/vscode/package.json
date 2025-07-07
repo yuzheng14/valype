@@ -35,6 +35,7 @@
     "reactive-vscode": "^0.3.0"
   },
   "scripts": {
-    "build": "tsdown"
+    "build": "tsdown",
+    "link-server": "mkdir node_modules/@valype && ln -s ../../../../language-tools/language-server node_modules/@valype/language-server"
   }
 }

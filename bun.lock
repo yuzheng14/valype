@@ -32,13 +32,13 @@
       "version": "0.0.1",
       "dependencies": {
         "@types/vscode": "^1.101.0",
-        "@volar/language-server": "^2.4.16",
         "@volar/vscode": "^2.4.16",
         "reactive-vscode": "^0.3.0",
-        "vscode-languageclient": "^9.0.1",
       },
       "devDependencies": {
         "@types/bun": "latest",
+        "@volar/language-server": "^2.4.16",
+        "vscode-languageclient": "^9.0.1",
       },
       "peerDependencies": {
         "typescript": "^5",
@@ -46,6 +46,7 @@
     },
     "language-tools/language-core": {
       "name": "@valype/language-core",
+      "version": "0.0.10",
       "dependencies": {
         "@volar/language-core": "^2.4.17",
         "alien-signals": "^2.0.5",
@@ -61,8 +62,16 @@
     },
     "language-tools/language-server": {
       "name": "@valype/language-server",
+      "bin": {
+        "valype-language-server": "./bin/valype-language-server.js",
+      },
+      "dependencies": {
+        "@valype/language-core": "workspace:*",
+        "@volar/language-server": "^2.4.17",
+      },
       "devDependencies": {
         "@types/bun": "latest",
+        "vscode-uri": "^3.1.0",
       },
       "peerDependencies": {
         "typescript": "^5",
@@ -1488,6 +1497,8 @@
 
     "@valype/language-core/@types/bun": ["@types/bun@1.2.18", "", { "dependencies": { "bun-types": "1.2.18" } }, "sha512-Xf6RaWVheyemaThV0kUfaAUvCNokFr+bH8Jxp+tTZfx7dAPA8z9ePnP9S9+Vspzuxxx9JRAXhnyccRj3GyCMdQ=="],
 
+    "@valype/language-server/@types/bun": ["@types/bun@1.2.18", "", { "dependencies": { "bun-types": "1.2.18" } }, "sha512-Xf6RaWVheyemaThV0kUfaAUvCNokFr+bH8Jxp+tTZfx7dAPA8z9ePnP9S9+Vspzuxxx9JRAXhnyccRj3GyCMdQ=="],
+
     "@valype/typescript-plugin/@types/bun": ["@types/bun@1.2.18", "", { "dependencies": { "bun-types": "1.2.18" } }, "sha512-Xf6RaWVheyemaThV0kUfaAUvCNokFr+bH8Jxp+tTZfx7dAPA8z9ePnP9S9+Vspzuxxx9JRAXhnyccRj3GyCMdQ=="],
 
     "@vue/compiler-core/estree-walker": ["estree-walker@2.0.2", "", {}, "sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w=="],
@@ -1557,6 +1568,8 @@
     "@typescript-eslint/typescript-estree/minimatch/brace-expansion": ["brace-expansion@2.0.2", "", { "dependencies": { "balanced-match": "^1.0.0" } }, "sha512-Jt0vHyM+jmUBqojB7E1NIYadt0vI0Qxjxd2TErW94wDz+E2LAm5vKMXXwg6ZZBTHPuUlDgQHKXvjGBdfcF1ZDQ=="],
 
     "@valype/language-core/@types/bun/bun-types": ["bun-types@1.2.18", "", { "dependencies": { "@types/node": "*" }, "peerDependencies": { "@types/react": "^19" } }, "sha512-04+Eha5NP7Z0A9YgDAzMk5PHR16ZuLVa83b26kH5+cp1qZW4F6FmAURngE7INf4tKOvCE69vYvDEwoNl1tGiWw=="],
+
+    "@valype/language-server/@types/bun/bun-types": ["bun-types@1.2.18", "", { "dependencies": { "@types/node": "*" }, "peerDependencies": { "@types/react": "^19" } }, "sha512-04+Eha5NP7Z0A9YgDAzMk5PHR16ZuLVa83b26kH5+cp1qZW4F6FmAURngE7INf4tKOvCE69vYvDEwoNl1tGiWw=="],
 
     "@valype/typescript-plugin/@types/bun/bun-types": ["bun-types@1.2.18", "", { "dependencies": { "@types/node": "*" }, "peerDependencies": { "@types/react": "^19" } }, "sha512-04+Eha5NP7Z0A9YgDAzMk5PHR16ZuLVa83b26kH5+cp1qZW4F6FmAURngE7INf4tKOvCE69vYvDEwoNl1tGiWw=="],
 

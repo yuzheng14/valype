@@ -1,4 +1,4 @@
-import { createLabsInfo } from '@volar/vscode'
+import { createLabsInfo, getTsdk } from '@volar/vscode'
 import {
   defineExtension,
   onDeactivate,
@@ -16,6 +16,10 @@ import * as serverProtocol from '@volar/language-server/protocol'
 
 let client: BaseLanguageClient
 
+interface InitializationOptions {
+  tsdk?: string
+}
+
 const LANGUAGE_SERVER_NAME = 'Valype Language Server'
 export const { activate, deactivate } = defineExtension(async (context) => {
   const serverModule = Uri.joinPath(
@@ -23,7 +27,7 @@ export const { activate, deactivate } = defineExtension(async (context) => {
     'node_modules',
     '@valype/language-server',
     'dist',
-    'server.js',
+    'index.js',
   )
 
   const serverOptions: ServerOptions = {
@@ -39,9 +43,15 @@ export const { activate, deactivate } = defineExtension(async (context) => {
     },
   }
 
+  const tsdk = (await getTsdk(context))?.tsdk
+
+  console.log(`tsdk ==>`, tsdk)
+
   const clientOptions: LanguageClientOptions = {
     documentSelector: [{ language: 'valype' }],
-    initializationOptions: {},
+    initializationOptions: {
+      tsdk,
+    } satisfies InitializationOptions,
     outputChannel: useOutputChannel(LANGUAGE_SERVER_NAME),
   }
 

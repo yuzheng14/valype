@@ -1,4 +1,5 @@
 import type { TSInterfaceDeclaration, TSTypeAliasDeclaration } from 'oxc-parser'
+import type { Dependency } from './dependency'
 
 export type TSDeclaration = TSInterfaceDeclaration | TSTypeAliasDeclaration
 export interface DeclarationInfo {
@@ -10,9 +11,7 @@ export interface DeclarationInfo {
 export interface GenerateContext {
   code: string
   decl: Map<string, DeclarationInfo>
-  /** interfaces to be process */
-  pending: DeclarationInfo[]
-  processed: Set<string>
+  exportedDecl: Dependency[]
 }
 
 export function createGenerateContext(
@@ -21,13 +20,12 @@ export function createGenerateContext(
   return {
     code,
     decl: new Map(),
-    pending: [],
-    processed: new Set(),
+    exportedDecl: [],
   }
 }
 
 export interface TranslationContext {
-  dependencies: string[]
+  dependencies: Dependency[]
 }
 
 /** create TranslationContext from GenerateContext */

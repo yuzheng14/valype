@@ -1,5 +1,7 @@
 import type { Span } from 'oxc-parser'
 
+// TODO move extractSpan to constructor of ValypeError
+
 class ValypeError extends Error {
   name = 'ValypeError'
   span: Span
@@ -34,6 +36,14 @@ export class ValypeSyntaxError extends ValypeError {
       `Unexpected ${unexpected}, expect ${Array.isArray(expect) ? expect.join(' | ') : expect}`,
       span,
     )
+  }
+}
+
+export class ValypeCircularDependencyError extends ValypeError {
+  name = 'ValypeCircularDependencyError' as const
+
+  constructor(name: string, span: Span) {
+    super(`Circular dependency detected: ${name}`, extractSpan(span))
   }
 }
 

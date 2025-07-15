@@ -27,6 +27,7 @@ import {
   ValypeUnimplementedError,
 } from '../error'
 import type { TranslationContext } from '../context'
+import { extractDependency } from '../dependency'
 
 export function mapTSInterfaceHeritage(
   node: TSInterfaceHeritage,
@@ -40,7 +41,7 @@ export function mapTSInterfaceHeritage(
       extractSpan(expression),
     )
   const { name } = expression
-  context.dependencies.push(name)
+  context.dependencies.push(extractDependency(expression))
   return `${name}Schema.shape`
 }
 
@@ -131,7 +132,7 @@ function mapTSTypeLiteral(node: TSTypeLiteral, context: TranslationContext) {
 function mapTSTypeName(node: TSTypeName, context: TranslationContext) {
   switch (node.type) {
     case 'Identifier':
-      context.dependencies.push(node.name)
+      context.dependencies.push(extractDependency(node))
       return `${node.name}Schema`
 
     default:

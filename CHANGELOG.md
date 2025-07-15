@@ -1,3 +1,11 @@
+## [0.0.11](https://github.com/yuzheng14/valype/compare/v0.0.10...v0.0.11) (2025-07-15)
+
+### Refactor
+
+* **valype:** ♻️ implement topological sorting for schema generation ([#21](https://github.com/yuzheng14/valype/issues/21)) ([0132a97](https://github.com/yuzheng14/valype/commit/0132a97284ea114b5754cf455acf4728de3acc3f))
+
+
+
 ## [0.0.10](https://github.com/yuzheng14/valype/compare/v0.0.9...v0.0.10) (2025-06-30)
 
 

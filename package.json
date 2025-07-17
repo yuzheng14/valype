@@ -30,7 +30,7 @@
     "test": "echo '使用 vitest 运行单次测试及覆盖率' && vitest run --coverage",
     "test:watch": "echo '使用 vitest 运行监控模式' && vitest --coverage",
     "test:ui": "echo '使用 vitest 运行监控模式并通过 web 可视化' && vitest --coverage --ui",
-    "build": "bun -b -F \"./packages/*\" build",
+    "build": "bun -b -F \"./packages/*\" -F \"./extensions/*\" -F \"./language-tools/*\" build",
     "playground": "bun -b -F playground dev",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "bump": "bumpp -r --all --execute \"bun run ./scripts/bump-version.ts\"",
@@ -43,9 +43,5 @@
     "website",
     "extensions/*",
     "language-tools/*"
-  ],
-  "overrides": {
-    "vitepress": "next",
-    "vite": "^7.0.0"
-  }
+  ]
 }

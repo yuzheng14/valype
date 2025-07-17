@@ -9,7 +9,6 @@
       "args": [
         "--disable-updates",
         "--disable-workspace-trust",
-        "--profile-temp",
         "--skip-release-notes",
         "--skip-welcome",
         "--extensionDevelopmentPath=${workspaceFolder}/extensions/vscode"

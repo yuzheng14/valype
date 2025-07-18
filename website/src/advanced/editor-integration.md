@@ -1,15 +1,28 @@
-# @valype/typescript-plugin
+ # Editor & IDE Integration
+
+Valype provides rich IDE support for `.valype.ts` files via:
+
+## 🥇 VSCode Extension (Recommended)
+
+You can get instant type hints, code completion, and go-to-definition for `.valype.ts` files by installing the [Valype VSCode extension](https://marketplace.visualstudio.com/items?itemName=yuzheng14.vscode-valype).
+
+- No manual tsconfig plugin configuration required
+- Works out of the box for all `.valype.ts` files
+
+Just search for "Valype" in the VSCode Extensions Marketplace and install.
+
+## 🛠️ TypeScript Plugin (Advanced/Custom)
 
 TypeScript language service plugin that provides IDE support for `.valype.ts` files.
 
-## Features
+### Features
 
 - Recognizes `.valype.ts` file extension
 - Transforms valype code to TypeScript in real-time
 - Provides IDE features like type checking, code completion and go-to-definition
 - Supports validation, semantic analysis and formatting
 
-## Installation
+### Installation
 
 ::: code-group
 
@@ -31,7 +44,7 @@ bun add -D @valype/typescript-plugin
 
 :::
 
-## Usage
+### Usage
 
 1. Configure plugin in tsconfig.json:
 
@@ -54,7 +67,7 @@ bun add -D @valype/typescript-plugin
    - Click the TypeScript version number in the status bar
    - Select "Use Workspace Version" from the dropdown
 
-## Example
+### Example
 
 ```typescript
 // user.valype.ts

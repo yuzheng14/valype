@@ -11,7 +11,8 @@
     "vscode",
     "language-server",
     "language-core",
-    "language-tools"
+    "language-tools",
+    "website & readme"
   ],
   "cSpell.words": [
     "intf",

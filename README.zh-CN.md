@@ -26,8 +26,8 @@
 - 🎯 类型安全的验证与 TypeScript 类型推断
 - 🔌 无缝的 unplugin 集成 (Vite/Rollup/esbuild/Astro/Farm/Nuxt/Rspack/Webpack)
 - 🛡️ 统一的类型验证
-- 🚧 TypeScript 插件 (开发中)
-- 🚧 IDE/编辑器扩展支持 (开发中)
+- 💻 TypeScript 插件
+- 🛠️ IDE/编辑器扩展支持
 
 Valype = Validate + Type。自动从 TypeScript 类型定义生成运行时验证器。
 
@@ -57,7 +57,9 @@ bun add -D unplugin-valype
 
 2. 根据 [unplugin-valype 文档](./packages/plugin/README.md) 为你的构建工具配置插件
 
-3. 定义你的类型 (使用 `.valype.ts` 扩展名):
+3. TypeScript 语言支持请参考下方 [编辑器集成](#-编辑器集成)。
+
+4. 定义你的类型 (使用 `.valype.ts` 扩展名):
 
 ```typescript
 // user.valype.ts
@@ -67,7 +69,7 @@ export interface User {
 }
 ```
 
-4. 使用生成的验证器:
+5. 使用生成的验证器:
 
 ```typescript
 import { validateUser } from './user.valype'
@@ -99,6 +101,48 @@ export declare function validateSome(data: unknown): ZodIssue[] | undefined
 | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ---------------- |
 | [valype](https://www.npmjs.com/package/valype)                   | [![valype 版本](https://img.shields.io/npm/v/valype?color=a1b858&label=)](https://www.npmjs.com/package/valype)                            | 核心模式生成逻辑 |
 | [unplugin-valype](https://www.npmjs.com/package/unplugin-valype) | [![unplugin-valype 版本](https://img.shields.io/npm/v/unplugin-valype?color=a1b858&label=)](https://www.npmjs.com/package/unplugin-valype) | 构建工具插件     |
+
+## 🧑‍💻 编辑器集成
+
+### VSCode 扩展
+
+只需安装 [Valype VSCode 扩展](https://marketplace.visualstudio.com/items?itemName=yuzheng14.vscode-valype)，即可在 `.valype.ts` 文件中获得类型提示、补全、跳转等 IDE 体验。
+
+- 无需手动配置 tsconfig 插件
+- 对所有 `.valype.ts` 文件开箱即用
+- 支持类型检查、补全、跳转等
+
+在 VSCode 扩展市场搜索 “Valype” 并安装即可。
+
+### TypeScript 语言服务插件
+
+如需手动配置或在其他编辑器中使用，可以安装 TypeScript 语言服务插件：
+
+```bash
+npm install -D @valype/typescript-plugin
+```
+
+然后在 tsconfig.json 中添加：
+
+```json
+{
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "@valype/typescript-plugin"
+      }
+    ]
+  }
+}
+```
+
+这样可以在支持 TypeScript 插件的编辑器中为 `.valype.ts` 文件启用类型提示、补全和跳转。
+
+> [!TIP]
+> 如果你在 VSCode 中使用该插件，为获得最佳类型体验，请设置为使用工作区的 TypeScript 版本：
+> 1. 打开任意 TypeScript 文件
+> 2. 点击状态栏中的 TypeScript 版本号
+> 3. 选择“使用工作区版本”
 
 ## 💡 项目动机
 

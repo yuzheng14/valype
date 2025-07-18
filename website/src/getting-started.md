@@ -130,6 +130,8 @@ if (issues) {
 }
 ```
 
+For IDE/editor integration (VSCode extension, TypeScript plugin, etc.), see [Editor & IDE Integration](./advanced/editor-integration.md).
+
 ## Validator Signature
 
 `unplugin-valype` generates validators for types exported from `*.valype.ts` files:

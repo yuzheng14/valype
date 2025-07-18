@@ -31,6 +31,6 @@ features:
     title: Unified type validation
     details: Define types once and get runtime validation automatically
   - icon: 💻
-    title: IDE Support
-    details: TypeScript plugin provides editor support for .valype.ts files
+    title: Editor & IDE Support
+    details: VSCode extension and TypeScript plugin provide rich editor support for .valype.ts files
 ---

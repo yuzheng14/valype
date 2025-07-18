@@ -53,7 +53,10 @@ export default defineConfig({
       {
         text: 'Advanced',
         items: [
-          { text: 'TypeScript Plugin', link: '/advanced/typescript-plugin' },
+          {
+            text: 'Editor & IDE Integration',
+            link: '/advanced/editor-integration',
+          },
           { text: 'API Reference', link: '/advanced/api-reference' },
         ],
       },

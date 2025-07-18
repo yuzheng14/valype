@@ -1,0 +1,29 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "runtimeExecutable": "${execPath}",
+      "args": [
+        "--disable-updates",
+        "--disable-workspace-trust",
+        "--skip-release-notes",
+        "--skip-welcome",
+        "--extensionDevelopmentPath=${workspaceFolder}/extensions/vscode"
+      ],
+      "outFiles": ["${workspaceFolder}/extensions/vscode/dist/*.js"],
+      "sourceMaps": true
+    },
+    {
+      "name": "Attach to Server",
+      "type": "node",
+      "request": "attach",
+      "port": 6009,
+      "restart": true,
+      "outFiles": ["${workspaceRoot}/*/*/dist/**/*.js"],
+      "skipFiles": ["<node_internals>/**"]
+    }
+  ]
+}

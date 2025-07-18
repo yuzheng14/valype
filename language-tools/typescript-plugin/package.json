@@ -1,0 +1,19 @@
+{
+  "name": "@valype/typescript-plugin",
+  "main": "./dist/index.cjs",
+  "type": "module",
+  "version": "0.0.11",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@volar/typescript": "^2.4.14",
+    "@valype/language-core": "workspace:*"
+  },
+  "scripts": {
+    "build": "tsdown"
+  }
+}

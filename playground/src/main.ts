@@ -8,6 +8,6 @@ console.log(`validateUser ==>`, validateUser)
 const a: unknown = {}
 
 assertUser(a)
-console.log(a)
+console.log(a.name)
 
 createApp(App).mount('#app')

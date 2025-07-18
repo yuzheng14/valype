@@ -27,7 +27,7 @@
 - 🔌 Seamless unplugin integration (Vite/Rollup/esbuild/Astro/Farm/Nuxt/Rspack/Webpack)
 - 🛡️ Unified type validation
 - 💻 TypeScript plugin for IDE support
-- 🚧 IDE/editor extension support (WIP)
+- 🛠️ IDE/editor extension support
 
 Valype = Validate + Type. Automatically generates runtime validators from TypeScript type definitions.
 
@@ -57,27 +57,7 @@ bun add -D unplugin-valype
 
 2. Configure plugin for your build tool following [unplugin-valype docs](./packages/plugin/README.md)
 
-3. For TypeScript language support, install the plugin:
-
-```bash
-npm install -D @valype/typescript-plugin
-```
-
-Then add to your tsconfig.json:
-
-```json
-{
-  "compilerOptions": {
-    "plugins": [
-      {
-        "name": "@valype/typescript-plugin"
-      }
-    ]
-  }
-}
-```
-
-> For VSCode users, ensure you're using the workspace version of TypeScript
+3. For TypeScript language support, see [Editor Integration](#-editor-integration) below.
 
 4. Define your types (use `.valype.ts` extension):
 
@@ -89,7 +69,7 @@ export interface User {
 }
 ```
 
-4. Use the generated validator:
+5. Use the generated validator:
 
 ```typescript
 import { validateUser } from './user.valype'
@@ -121,6 +101,48 @@ export declare function validateSome(data: unknown): ZodIssue[] | undefined
 | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
 | [valype](https://www.npmjs.com/package/valype)                   | [![valype version](https://img.shields.io/npm/v/valype?color=a1b858&label=)](https://www.npmjs.com/package/valype)                            | Core schema generation logic |
 | [unplugin-valype](https://www.npmjs.com/package/unplugin-valype) | [![unplugin-valype version](https://img.shields.io/npm/v/unplugin-valype?color=a1b858&label=)](https://www.npmjs.com/package/unplugin-valype) | Build tool plugin            |
+
+## 🧑‍💻 Editor Integration
+
+### VSCode Extension
+
+You can get instant type hints, code completion, and go-to-definition for `.valype.ts` files by installing the [Valype VSCode extension](https://marketplace.visualstudio.com/items?itemName=yuzheng14.vscode-valype).
+
+- No manual tsconfig plugin configuration required
+- Works out of the box for all `.valype.ts` files
+- Supports type checking, completion, navigation, and more
+
+Just search for "Valype" in the VSCode Extensions Marketplace and install.
+
+### TypeScript Language Service Plugin
+
+If you want to manually configure or use in other editors, you can install the TypeScript language service plugin:
+
+```bash
+npm install -D @valype/typescript-plugin
+```
+
+Then add to your tsconfig.json:
+
+```json
+{
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "@valype/typescript-plugin"
+      }
+    ]
+  }
+}
+```
+
+This enables type hints, completion, and navigation for `.valype.ts` files in any editor that supports TypeScript plugins.
+
+> [!TIP]
+> If you use this plugin in VSCode, for the best type experience, set VSCode to use the workspace TypeScript version:
+> 1. Open a TypeScript file in VSCode
+> 2. Click the TypeScript version number in the status bar
+> 3. Select "Use Workspace Version"
 
 ## 💡 Motivation
 

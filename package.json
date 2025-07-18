@@ -7,6 +7,7 @@
     "@eslint/js": "^9.29.0",
     "@eslint/json": "^0.12.0",
     "@eslint/markdown": "^6.5.0",
+    "@napi-rs/wasm-runtime": "^1.0.0",
     "@types/bun": "^1.2.16",
     "@vitest/coverage-v8": "^3.2.4",
     "@vitest/ui": "^3.2.4",
@@ -30,7 +31,7 @@
     "test": "echo '使用 vitest 运行单次测试及覆盖率' && vitest run --coverage",
     "test:watch": "echo '使用 vitest 运行监控模式' && vitest --coverage",
     "test:ui": "echo '使用 vitest 运行监控模式并通过 web 可视化' && vitest --coverage --ui",
-    "build": "bun -b -F \"./packages/*\" build",
+    "build": "bun -b -F \"./packages/*\" build && bun -b -F \"./language-tools/*\" build && bun -b -F \"./extensions/*\" build",
     "playground": "bun -b -F playground dev",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "bump": "bumpp -r --all --execute \"bun run ./scripts/bump-version.ts\"",
@@ -40,10 +41,8 @@
   "workspaces": [
     "packages/*",
     "playground",
-    "website"
-  ],
-  "overrides": {
-    "vitepress": "next",
-    "vite": "^7.0.0"
-  }
+    "website",
+    "extensions/*",
+    "language-tools/*"
+  ]
 }

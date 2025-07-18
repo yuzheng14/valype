@@ -4,37 +4,42 @@
   "description": "A VS Code extension for valype.",
   "publisher": "yuzheng14",
   "version": "0.0.11",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yuzheng14/valype.git"
+  },
+  "license": "MIT",
   "engines": {
     "vscode": "^1.55.0"
   },
-  "activationEvents": [
-    "onLanguage:typescript",
-    "onLanguage:typescriptreact"
-  ],
-  "main": "dist/extension.js",
   "contributes": {
     "typescriptServerPlugins": [
       {
-        "name": "@valype/typescript-plugin",
+        "name": "valype-typescript-plugin",
         "enableForWorkspaceTypeScriptVersions": true,
         "configNamespace": "typescript"
       }
     ]
   },
-  "type": "module",
+  "type": "commonjs",
+  "icon": "logo.png",
+  "bugs": {
+    "url": "https://github.com/yuzheng14/valype/issues"
+  },
   "devDependencies": {
-    "@valype/typescript-plugin": "workspace:*",
-    "@types/vscode": "^1.55.0",
-    "reactive-vscode": "^0.3.0",
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "axios": "^1.10.0",
+    "package-json": "^10.0.1",
+    "tar": "^7.4.3"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "scripts": {
-    "build": "tsdown"
+    "build": "tsdown",
+    "pack": "vsce package",
+    "pack:tmp": "node ../../../vscode-vsce/vsce pack",
+    "pub:tmp": "node ../../../vscode-vsce/vsce publish"
   },
-  "dependencies": {
-    "oxc-parser": "^0.77.1"
-  }
+  "dependencies": {}
 }

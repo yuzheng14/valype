@@ -1,7 +1,7 @@
+/// <reference types="@volar/typescript" />
 import { forEachEmbeddedCode, type LanguagePlugin } from '@volar/language-core'
 import { ValypeCode } from './language'
 import type { ScriptKind } from 'typescript'
-import '@volar/typescript'
 
 export function createPlugin<T>(
   resolveFileName: (scriptId: T) => string,

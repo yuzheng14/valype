@@ -1,15 +1,3 @@
-# vscode-valype
+# Valype
 
-To install dependencies:
-
-```bash
-bun install
-```
-
-To run:
-
-```bash
-bun run src/extension.ts
-```
-
-This project was created using `bun init` in bun v1.2.17. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+Refer to [yuzheng14/valype · README.md](https://github.com/yuzheng14/valype/blob/main/README.md)

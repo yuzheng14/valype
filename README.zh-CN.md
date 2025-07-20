@@ -53,7 +53,7 @@ bun add zod@latest
 bun add -D unplugin-valype
 ```
 
-> zod 的版本至少需要 `3.25.0`，因为 valype 生成的是 zod v4 schema
+> zod 的版本至少需要 `3.25.0`，但我们推荐使用 zod v4 以获得最佳体验，因为 valype 生成的是 zod v4 schema
 
 2. 根据 [unplugin-valype 文档](./packages/plugin/README.md) 为你的构建工具配置插件
 

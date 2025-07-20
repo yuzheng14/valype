@@ -1,0 +1,6 @@
+---
+globs: README.*
+alwaysApply: false
+---
+
+- All documentation about editor integration (VSCode extension, TypeScript plugin, etc.) must be updated in both English and Chinese README files, ensuring all features, usage, tips, and examples are consistent and synchronized.

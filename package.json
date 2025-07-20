@@ -3,10 +3,10 @@
   "version": "0.0.11",
   "author": "yuzheng14 <lyuchensy@foxmail.com>",
   "devDependencies": {
-    "@eslint/css": "^0.8.1",
+    "@eslint/css": "^0.10.0",
     "@eslint/js": "^9.29.0",
-    "@eslint/json": "^0.12.0",
-    "@eslint/markdown": "^6.5.0",
+    "@eslint/json": "^0.13.0",
+    "@eslint/markdown": "^7.0.0",
     "@napi-rs/wasm-runtime": "^1.0.0",
     "@types/bun": "^1.2.16",
     "@vitest/coverage-v8": "^3.2.4",

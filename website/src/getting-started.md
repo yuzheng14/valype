@@ -26,7 +26,7 @@ bun add zod@latest
 bun add -D unplugin-valype
 ```
 
-> zod's version should be `3.25.0` at least, because valype generates zod v4 schema
+> zod's version should be `3.25.0` at least, but we recommend using zod v4 for the best experience, because valype generates zod v4 schema
 
 :::
 

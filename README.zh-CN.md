@@ -114,6 +114,8 @@ export declare function validateSome(data: unknown): ZodIssue[] | undefined
 
 在 VSCode 扩展市场搜索 “Valype” 并安装即可。
 
+该扩展也已发布到 [openVSX](https://open-vsx.org/extension/yuzheng14/vscode-valype)，可供 Cursor 等编辑器使用。
+
 ### TypeScript 语言服务插件
 
 如需手动配置或在其他编辑器中使用，可以安装 TypeScript 语言服务插件：

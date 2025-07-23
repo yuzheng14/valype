@@ -114,6 +114,8 @@ You can get instant type hints, code completion, and go-to-definition for `.valy
 
 Just search for "Valype" in the VSCode Extensions Marketplace and install.
 
+The extension is also available on [openVSX](https://open-vsx.org/extension/yuzheng14/vscode-valype) for use in editors like Cursor.
+
 ### TypeScript Language Service Plugin
 
 If you want to manually configure or use in other editors, you can install the TypeScript language service plugin:

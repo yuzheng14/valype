@@ -3,7 +3,7 @@
   "displayName": "Valype",
   "description": "A VS Code extension for valype.",
   "publisher": "yuzheng14",
-  "version": "0.0.11",
+  "version": "0.1.0-beta.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/yuzheng14/valype.git"

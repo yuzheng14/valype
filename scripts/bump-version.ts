@@ -23,7 +23,7 @@ async function main() {
     Object.keys(lockData.workspaces).forEach((pkgKey) => {
       if (lockData.workspaces[pkgKey].version) {
         const path = ['workspaces', pkgKey, 'version']
-        const edits = modify(lockFile, path, version, {})
+        const edits = modify(modifiedContent, path, version, {})
         modifiedContent = applyEdits(modifiedContent, edits)
       }
     })

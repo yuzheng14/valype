@@ -1,3 +1,13 @@
+# [0.1.0-beta.1](https://github.com/yuzheng14/valype/compare/v0.0.11...v0.1.0-beta.1) (2025-08-05)
+
+
+### Features
+
+* **plugin:** :sparkles: add rolldown support ([86d96fc](https://github.com/yuzheng14/valype/commit/86d96fc6203231caf446115b698695269780188a))
+* **vscode:** ✨ add vscode extension ([#34](https://github.com/yuzheng14/valype/issues/34)) ([323550e](https://github.com/yuzheng14/valype/commit/323550e3744bd5b21479cc759127499d6a6d1670))
+
+
+
 ## [0.0.11](https://github.com/yuzheng14/valype/compare/v0.0.10...v0.0.11) (2025-07-15)
 
 ### Refactor

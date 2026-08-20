@@ -13,6 +13,16 @@
     "vscode": "^1.55.0"
   },
   "contributes": {
+    "iconMaps": {
+      "valype": {
+        "files": {
+          "extensions": [
+            ".valype.ts"
+          ],
+          "icon": "logo.png"
+        }
+      }
+    },
     "typescriptServerPlugins": [
       {
         "name": "valype-typescript-plugin",
